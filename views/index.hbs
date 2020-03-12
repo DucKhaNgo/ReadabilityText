@@ -1,0 +1,189 @@
+{{!-- {{>header user=this.user}} --}}
+    <section class="masthead masthead--readability clearfix">
+        <section class="content-section center hard-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h1>
+                            <span class="uppercase biggest">Readability Test Tool</span><br>
+                        </h1>
+                    </div>
+                    <div class="col-xs-12 col-md-offset-2 col-md-8">
+                        <h2>
+                            <span class="serif big text--white">Quick and easy way to test the readability of your work.</span>
+                        </h2>
+                    </div>
+                </div>
+            </div>
+        </section>
+            <div id="content" class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-lg-offset-2 col-lg-8">
+
+
+            <div id="tabs" class="ui-tabs-nav">
+                <ul class="center">
+                    <li class="ui-state-active" onclick="changeActiveTab('url')"><a class="btn gray" href="https://www.webfx.com/tools/read-able/check.php?tab=Test+By+Url&amp;uri=https%3A%2F%2Fgithub.com%2Fwords%2Fdale-chall-formula#tabs-1" data-tab="Test By Url">Test By Url</a></li>
+                    <li onclick="changeActiveTab('direct')"><a class="btn gray" href="https://www.webfx.com/tools/read-able/check.php?tab=Test+By+Url&amp;uri=https%3A%2F%2Fgithub.com%2Fwords%2Fdale-chall-formula#tabs-2" data-tab="Test by Direct Link">Test by Direct Input</a></li>
+                    <li id="tab-referer" onclick="changeActiveTab('referer')"><a class="btn gray" href="https://www.webfx.com/tools/read-able/check.php?tab=Test+By+Url&amp;uri=https%3A%2F%2Fgithub.com%2Fwords%2Fdale-chall-formula#tabs-3" data-tab="Test by Referer">Test by Referer</a></li>
+                </ul>
+                <div class="bg--dkblue soft">
+                    <div id="tabs-1" class="ui-state-active tab-content">
+
+                        <h1 class="text--white">Test by URL</h1>
+                        <p class="text--white small-copy">Test the readability of a web page:</p>
+                        <form method="get" action="/checkByUrl" class="main-form">
+                            <input type="hidden" class="js-selected-tab" name="tab" value="Test By Url">
+                            <fieldset>
+                                <div class="form-row">
+                                    <!--<label title="Address of page to Validate" for="uri">Web Address:</label>-->
+                                    <input type="text" name="uri" id="uri" size="45" value="http://">
+
+                                    <input type="submit" value="Calculate Readability" class="btn blue push-top">
+                                </div>
+                            </fieldset>
+                        </form>
+
+                        {{#if ischecked}}
+                        <div class="readability-results">
+                            <div class="meanScore scale-d">
+                                <p class="text--blue uppercase sans-serif--bold flush-bottom">Test Results:</p>
+                                <p class="flush-top small-copy">Your page (https://github.com/words/dale-chall-formula) has an average <strong>grade level of about 7</strong>. It should be easily understood by 12 to 13 year olds.</p>
+								<form method="POST" action="https://www.twitter.com/home?status=The%20text%20on%20https://github.com/words/dale-chall-formula%20has%20an%20average%20grade%20level%20of%207.%20Check%20your%20page%27s%20readability%20score%20here!%20http://www.webfx.com/tools/read-able/" target="_blank">
+									<button style="display:inline-block !important" type="submit" id="read-able-social" class="social-button--twitter" href="https://twitter.com/" target="_blank"><span class="icon-twitter4"></span></button>
+									<label style="display:inline-block">Tweet your results!</label>
+								</form>
+                            </div>
+                            <div class="results">
+                                <p class="text--blue uppercase sans-serif--bold flush-bottom">Readability Indices</p>
+                                <table>
+                                    <tbody><tr>
+                                        <th>Flesch Kincaid Reading Ease</th>
+                                        <td>61.3</td>
+                                        <td class="indicator"><div class="scale"><span class="scale-c"></span></div></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Flesch Kincaid Grade Level</th>
+                                        <td>5.8</td>
+                                        <td class="indicator"><div class="scale"><span class="scale-d"></span></div></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Gunning Fog Score</th>
+                                        <td>6.3</td>
+                                        <td class="indicator"><div class="scale"><span class="scale-d"></span></div></td>
+                                    </tr>
+                                    <tr>
+                                        <th>SMOG Index</th>
+                                        <td>5</td>
+                                        <td class="indicator"><div class="scale"><span class="scale-d"></span></div></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Coleman Liau Index</th>
+                                        <td>12.2</td>
+                                        <td class="indicator"><div class="scale"><span class="scale-c"></span></div></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Automated Readability Index</th>
+                                        <td>3.2</td>
+                                        <td class="indicator"><div class="scale"><span class="scale-e"></span></div></td>
+                                    </tr>
+                                </tbody></table>
+                            </div>
+
+                            <div class="results">
+                                <p class="text--blue uppercase sans-serif--bold flush-bottom">Text Statistics</p>
+                                <table>
+                                    <tbody><tr>
+                                        <th>No. of sentences</th>
+                                        <td>148</td>
+                                        <td class="indicator"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>No. of words</th>
+                                        <td>662</td>
+                                        <td></td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>No. of complex words</th>
+                                        <td>97</td>
+                                        <td></td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Percent of complex words</th>
+                                        <td>14.65%</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Average words  per sentence</th>
+                                        <td>4.47</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Average syllables per word</th>
+                                        <td>1.67</td>
+                                        <td></td>
+                                    </tr>
+                                </tbody></table>
+                            </div>
+                        </div>
+                        {{else}}
+                             <p class="text--blue uppercase sans-serif--bold">Example web addresses:</p>
+                        <p class="text--white small-copy">» http://www.example.com/ for a complete web page</p>
+                        <p class="text--white small-copy">» http://www.example.com/#mainContent for part of a web page, based on a content area within a container &lt;div id="mainContent"&gt;&lt;/div&gt;</p>
+                        <p class="text--white italic small-copy">Note: Testing only the main content part of the page removes any skew in the results due to navigational elements</p>
+                        {{/if}}
+                    </div>
+
+                    <div id="tabs-2" class=" tab-content">
+                        <h1>Test by Direct Input</h1>
+                        <form method="post" action="/checkByDirect" class="main-form">
+                            <input type="hidden" class="js-selected-tab" name="tab" value="Test by Direct Link">
+                            <fieldset>
+                                <div class="form-row">
+                                    <!--<label title="Paste a complete (HTML) Document here" for="directInput">Enter text to check the readability:</label><br />-->
+                                    <textarea id="directInput" name="directInput" rows="10" cols="60" value="">Enter text to check the readability:</textarea>
+
+                                    <p class="text--white italic smaller-copy"> HTML is allowed - it will be stripped from the text. </p>
+                                    <input type="submit" value="Calculate Readability" class="btn blue push-top">
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+
+                    <div id="tabs-3" class="tab-content">
+                        <h1>Test by Input file</h1>
+                        <form method="POST" action="/checkByFile">
+                        <input type="file" name="fileData">
+                        <input type="submit" value="Calculate Readability" class="btn blue push-top">
+                        </form>
+
+                        <p class="text--white italic small-copy">This will eliminate testing for navigational elements.</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    </section>
+<script>
+  function changeActiveTab(tab) {
+    console.log(tab);
+    if (tab === 'direct') {
+      $('#tabs-2').addClass('ui-state-active');
+      $('#tabs-1').removeClass('ui-state-active');
+      $('#tabs-3').removeClass('ui-state-active');
+    } else if (tab === 'url') {
+       $('#tabs-1').addClass('ui-state-active');
+      $('#tabs-2').removeClass('ui-state-active');
+      $('#tabs-3').removeClass('ui-state-active');
+    } else if (tab === 'referer') {
+        $('#tabs-3').addClass('ui-state-active');
+      $('#tabs-2').removeClass('ui-state-active');
+      $('#tabs-1').removeClass('ui-state-active');
+    }
+  }
+</script>
+{{!-- {{>footer}} --}}
