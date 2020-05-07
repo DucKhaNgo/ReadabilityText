@@ -23,12 +23,37 @@
 
             <div id="tabs" class="ui-tabs-nav">
                 <ul class="center">
-                    <li class="ui-state-active" onclick="changeActiveTab('url')"><a class="btn gray" href="https://www.webfx.com/tools/read-able/check.php?tab=Test+By+Url&amp;uri=https%3A%2F%2Fgithub.com%2Fwords%2Fdale-chall-formula#tabs-1" data-tab="Test By Url">Test By Url</a></li>
-                    <li onclick="changeActiveTab('direct')"><a class="btn gray" href="https://www.webfx.com/tools/read-able/check.php?tab=Test+By+Url&amp;uri=https%3A%2F%2Fgithub.com%2Fwords%2Fdale-chall-formula#tabs-2" data-tab="Test by Direct Link">Test by Direct Input</a></li>
-                    <li id="tab-referer" onclick="changeActiveTab('referer')"><a class="btn gray" href="https://www.webfx.com/tools/read-able/check.php?tab=Test+By+Url&amp;uri=https%3A%2F%2Fgithub.com%2Fwords%2Fdale-chall-formula#tabs-3" data-tab="Test by Referer">Test by Referer</a></li>
+                    <li class="ui-state-active"  onclick="changeActiveTab('direct')"><a class="btn gray" href="https://www.webfx.com/tools/read-able/check.php?tab=Test+By+Url&amp;uri=https%3A%2F%2Fgithub.com%2Fwords%2Fdale-chall-formula#tabs-2" data-tab="Test by Direct Link">Test by Direct Input</a></li>
+                    <li id="tab-referer" onclick="changeActiveTab('referer')"><a class="btn gray" href="https://www.webfx.com/tools/read-able/check.php?tab=Test+By+Url&amp;uri=https%3A%2F%2Fgithub.com%2Fwords%2Fdale-chall-formula#tabs-3" data-tab="Test by File Word">Test by File Word</a></li>
                 </ul>
+                                  <div id="tabs-2" class="ui-state-active tab-content">
+                        <h1>Test by Direct Input</h1>
+                        <form method="post" action="/checkByDirect" class="main-form">
+                            <input type="hidden" class="js-selected-tab" name="tab" value="Test by Direct Link">
+                            <fieldset>
+                                <div class="form-row">
+                                    <!--<label title="Paste a complete (HTML) Document here" for="directInput">Enter text to check the readability:</label><br />-->
+                                    <textarea id="directInput" name="directInput" rows="10" cols="60" placeholder="Enter text to check the readability:">{{text}}</textarea>
+
+                                    <p class="text--white italic smaller-copy"> HTML is allowed - it will be stripped from the text. </p>
+                                    <input type="submit" value="Calculate Readability" class="btn blue push-top">
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+
+                    <div id="tabs-3" class="tab-content">
+                        <h1>Test by Input file</h1>
+                        <form method="POST" action="/checkByFile" enctype="multipart/form-data">
+                        <input type="file" name="fileData" style=" background: white; ">
+                        <input type="submit" value="Calculate Readability" class="btn blue push-top">
+                        </form>
+
+                        <p class="text--white italic small-copy">This will eliminate testing for navigational elements.</p>
+                    </div>
+                {{#if ischecked}}
                 <div class="bg--dkblue soft">
-                    <div id="tabs-1" class="ui-state-active tab-content">
+                    {{!-- <div id="tabs-1" class="ui-state-active tab-content">
 
                         <h1 class="text--white">Test by URL</h1>
                         <p class="text--white small-copy">Test the readability of a web page:</p>
@@ -43,8 +68,7 @@
                                 </div>
                             </fieldset>
                         </form>
-
-                        {{#if ischecked}}
+                    --}}
                         <div class="readability-results">
                             <div class="meanScore scale-d">
                                 <p class="text--blue uppercase sans-serif--bold flush-bottom">Test Results:</p>
@@ -129,39 +153,9 @@
                             </div>
                         </div>
                         {{else}}
-                             <p class="text--blue uppercase sans-serif--bold">Example web addresses:</p>
-                        <p class="text--white small-copy">» http://www.example.com/ for a complete web page</p>
-                        <p class="text--white small-copy">» http://www.example.com/#mainContent for part of a web page, based on a content area within a container &lt;div id="mainContent"&gt;&lt;/div&gt;</p>
-                        <p class="text--white italic small-copy">Note: Testing only the main content part of the page removes any skew in the results due to navigational elements</p>
+
                         {{/if}}
                     </div>
-
-                    <div id="tabs-2" class=" tab-content">
-                        <h1>Test by Direct Input</h1>
-                        <form method="post" action="/checkByDirect" class="main-form">
-                            <input type="hidden" class="js-selected-tab" name="tab" value="Test by Direct Link">
-                            <fieldset>
-                                <div class="form-row">
-                                    <!--<label title="Paste a complete (HTML) Document here" for="directInput">Enter text to check the readability:</label><br />-->
-                                    <textarea id="directInput" name="directInput" rows="10" cols="60" value="">Enter text to check the readability:</textarea>
-
-                                    <p class="text--white italic smaller-copy"> HTML is allowed - it will be stripped from the text. </p>
-                                    <input type="submit" value="Calculate Readability" class="btn blue push-top">
-                                </div>
-                            </fieldset>
-                        </form>
-                    </div>
-
-                    <div id="tabs-3" class="tab-content">
-                        <h1>Test by Input file</h1>
-                        <form method="POST" action="/checkByFile">
-                        <input type="file" name="fileData">
-                        <input type="submit" value="Calculate Readability" class="btn blue push-top">
-                        </form>
-
-                        <p class="text--white italic small-copy">This will eliminate testing for navigational elements.</p>
-                    </div>
-
                 </div>
             </div>
         </div>

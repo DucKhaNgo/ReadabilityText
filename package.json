@@ -48,7 +48,9 @@
     "sdk-abc-voice": "^1.0.0",
     "smog-formula": "^1.0.5",
     "spache-formula": "^1.0.5",
+    "textract": "^2.5.0",
     "utf8": "^3.0.0",
-    "uuid": "^3.3.3"
+    "uuid": "^3.3.3",
+    "word-extractor": "^0.3.0"
   }
 }
