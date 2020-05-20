@@ -81,8 +81,11 @@
                         <div class="readability-results">
                             <div class="meanScore scale-d">
                                 {{#each arrTextInput}}
-                                <div class="tooltip"><span>{{text}}</span> <span
-                                        class="tooltiptext"><span>{{type}}</span></span> </div>
+                                <div class="tooltip"><span>{{text}}</span>
+                                 <span class="tooltiptext">
+                                        <span>Từ loại: {{type}}, </span> 
+                                        <span>Số lần xuất hiện: {{numberExist}}</span>
+                                        </span> </div>
                                 {{/each}}
                                 <p class="text--blue uppercase sans-serif--bold flush-bottom">Test Results:</p>
                                 <span></span>
@@ -98,91 +101,142 @@
                                     <label style="display:inline-block">Tweet your results!</label>
                                 </form>
                             </div>
-                            <div class="results">
-                                <p class="text--blue uppercase sans-serif--bold flush-bottom">Readability Indices</p>
-                                <table>
-                                    <tbody>
-                                        <tr>
-                                            <th>Flesch Kincaid Reading Ease</th>
-                                            <td>61.3</td>
-                                            <td class="indicator">
-                                                <div class="scale"><span class="scale-c"></span></div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>Flesch Kincaid Grade Level</th>
-                                            <td>5.8</td>
-                                            <td class="indicator">
-                                                <div class="scale"><span class="scale-d"></span></div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>Gunning Fog Score</th>
-                                            <td>6.3</td>
-                                            <td class="indicator">
-                                                <div class="scale"><span class="scale-d"></span></div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>SMOG Index</th>
-                                            <td>5</td>
-                                            <td class="indicator">
-                                                <div class="scale"><span class="scale-d"></span></div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>Coleman Liau Index</th>
-                                            <td>12.2</td>
-                                            <td class="indicator">
-                                                <div class="scale"><span class="scale-c"></span></div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>Automated Readability Index</th>
-                                            <td>3.2</td>
-                                            <td class="indicator">
-                                                <div class="scale"><span class="scale-e"></span></div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div class="results">
+                                 <div class="results">
                                 <p class="text--blue uppercase sans-serif--bold flush-bottom">Text Statistics</p>
                                 <table>
                                     <tbody>
                                         <tr>
                                             <th>No. of sentences</th>
-                                            <td>148</td>
+                                            <td>{{dataResponse.number_of_sentence}}</td>
                                             <td class="indicator"></td>
                                         </tr>
                                         <tr>
                                             <th>No. of words</th>
-                                            <td>662</td>
+                                            <td>{{dataResponse.number_of_word}}</td>
                                             <td></td>
                                         </tr>
 
                                         <tr>
-                                            <th>No. of complex words</th>
-                                            <td>97</td>
+                                            <th>No. of distinct words</th>
+                                            <td>{{dataResponse.number_of_distinct_word}}</td>
                                             <td></td>
                                         </tr>
 
                                         <tr>
-                                            <th>Percent of complex words</th>
-                                            <td>14.65%</td>
+                                            <th>No. of syllable</th>
+                                            <td>{{dataResponse.number_of_syllable}}</td>
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <th>Average words per sentence</th>
-                                            <td>4.47</td>
+                                            <th>No. of distinct syllable</th>
+                                            <td>{{dataResponse.number_of_distinct_syllable}}</td>
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <th>Average syllables per word</th>
-                                            <td>1.67</td>
+                                            <th>No. of character</th>
+                                            <td>{{dataResponse.number_of_character}}</td>
                                             <td></td>
+                                        </tr>
+                                           <tr>
+                                            <th>No. of proper noun</th>
+                                            <td>{{dataResponse.number_of_proper_noun}}</td>
+                                            <td></td>
+                                        </tr>
+                                                 <tr>
+                                            <th>No. of distinct proper noun</th>
+                                            <td>{{dataResponse.number_of_distinct_proper_noun}}</td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="results">
+                                <p class="text--blue uppercase sans-serif--bold flush-bottom">Readability Indices</p>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <th>Avg. sentence length calculated by words</th>
+                                            <td>{{dataResponse.aslw}}</td>
+                                            <td class="indicator">
+                                                <div class="scale"><span class="scale-c"></span></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Avg. sentence length calculated by syllables</th>
+                                            <td>{{dataResponse.asls}}</td>
+                                            <td class="indicator">
+                                                <div class="scale"><span class="scale-d"></span></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Avg. sentence length calculated by characters</th>
+                                            <td>{{dataResponse.aslc}}</td>
+                                            <td class="indicator">
+                                                <div class="scale"><span class="scale-d"></span></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Avg. word length calculated by syllables</th>
+                                            <td>{{dataResponse.awls}}</td>
+                                            <td class="indicator">
+                                                <div class="scale"><span class="scale-d"></span></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Avg. word length calculated by characters</th>
+                                            <td>{{dataResponse.awlc}}</td>
+                                            <td class="indicator">
+                                                <div class="scale"><span class="scale-c"></span></div>
+                                            </td>
+                                        </tr>
+                                                <tr>
+                                            <th>Percentage of Difficult Syllables </th>
+                                            <td>{{dataResponse.pds}}</td>
+                                            <td class="indicator">
+                                                <div class="scale"><span class="scale-e"></span></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Percentage of Difficult Words</th>
+                                            <td>{{dataResponse.pdw}}</td>
+                                            <td class="indicator">
+                                                <div class="scale"><span class="scale-e"></span></div>
+                                            </td>
+                                        </tr>
+                                          <tr>
+                                            <th>Percertage of Sino Vietnamese Word</th>
+                                            <td>{{dataResponse.psvw}}</td>
+                                            <td class="indicator">
+                                                <div class="scale"><span class="scale-e"></span></div>
+                                            </td>
+                                        </tr>
+                                             <tr>
+                                            <th>Percertage of Diaclet Word</th>
+                                            <td>{{dataResponse.pdiadw}}</td>
+                                            <td class="indicator">
+                                                <div class="scale"><span class="scale-e"></span></div>
+                                            </td>
+                                        </tr>
+                                               <tr>
+                                            <th>Luong An Vinh Fomula</th>
+                                            <td>{{dataResponse.LAVFomula}}</td>
+                                            <td class="indicator">
+                                                <div class="scale"><span class="scale-e"></span></div>
+                                            </td>
+                                        </tr>
+                                                         <tr>
+                                            <th>Liem Thanh Nguyen and Alan B. Henkin Fomula 1982</th>
+                                            <td>{{dataResponse.NH1982}}</td>
+                                            <td class="indicator">
+                                                <div class="scale"><span class="scale-e"></span></div>
+                                            </td>
+                                        </tr>
+                                               <tr>
+                                            <th>Liem Thanh Nguyen and Alan B. Henkin Fomula 1985</th>
+                                            <td>{{dataResponse.NH1985}}</td>
+                                            <td class="indicator">
+                                                <div class="scale"><span class="scale-e"></span></div>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>

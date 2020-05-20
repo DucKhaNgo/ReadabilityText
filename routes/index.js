@@ -9,6 +9,41 @@ var FormData = require('form-data');
 var fetch = require('fetch').fetchUrl;
 var fileName = '';
 const PATH = "./uploads";
+
+const DATATYPE = {
+  A: 'Tính từ',
+  Ab: 'Tính từ mượn',
+  B: 'Từ mượn',
+  C: 'Liên từ',
+  Cc: 'Liên từ đẳng lập',
+  CH: 'Dấu câu',
+  E: 'Giới từ',
+  Fw: 'Từ nước ngoài',
+  FW: 'Từ nước ngoài',
+  I: 'Thán từ',
+  L: 'Định từ',
+  M: 'Số từ',
+  N: 'Danh từ',
+  Nb: 'Danh từ mượn',
+  Nc: 'Danh từ chỉ loại',
+  Ne: '',
+  Ni: 'Danh từ kí hiệu',
+  Np: 'Danh từ riêng',
+  NNP: '',
+  Ns: '',
+  Nu: 'Danh từ đơn vị',
+  Ny: 'Danh từ viết tắt',
+  P: 'Đại từ',
+  R: 'Phó từ',
+  S: '',
+  T: 'Trợ từ',
+  V: 'Động từ',
+  Vb: 'Động từ mượn',
+  Vy: 'Động từ viết tắt',
+  X: 'Không phân loại',
+  Y: '',
+  Z: ''
+}
 var Storage = multer.diskStorage({
   destination: function (req, file, callback) {
     console.log('destination----');
@@ -35,29 +70,42 @@ router.get('/', function (req, res, next) {
 function handleData(directInput, res, checkBy) {
   axios({
     method: 'post',
-    url: 'http://localhost:8000/text_analysis/',
+    url: 'https://readabilityhcmus.herokuapp.com/text_analysis/',
     data: `input_text=${directInput}`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
   }).then(result => {
-    console.log(result.data);
+    result = result.data;
     const {
-      posTag
-    } = result.data;
+      posTag,
+      wordCounter
+    } = result;
+
+    // mapping posTag and wordCounter
     const arrTextInput = [];
     posTag.forEach(element => {
+      const numberExist = wordCounter[element[0]];
+      const type = DATATYPE[element[1]];
       const obj = {
         text: element[0],
-        type: element[1]
+        type,
+        numberExist
       }
       arrTextInput.push(obj);
     });
-    console.log('arrText-----', arrTextInput);
+    // convert float numbet to 3 number after .
+    for (const key in result) {
+      if (typeof result[key] === 'number') {
+        result[key] = Math.round(result[key]*1000)/1000;
+      }
+    }
+
     res.render('index', {
       ischecked: true,
       arrTextInput,
-      checkBy
+      checkBy,
+      dataResponse: result
     });
   });
 }
@@ -78,6 +126,7 @@ router.post('/checkByDirect', function (req, res, next) {
 router.post('/checkByFile', upload.single('fileData'), (req, res) => {
   try {
     textract.fromFileWithPath(`${PATH}/${fileName}`, function (err, text) {
+      text = text.slice(0, text.length - 2);
       console.log('text-------', text);
       handleData(text, res, 'file');
     });

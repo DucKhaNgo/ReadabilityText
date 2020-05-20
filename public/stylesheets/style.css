@@ -9,27 +9,31 @@
 
 .tooltip {
   position: relative;
-    display: inline-block;
-    font-size: 20px;
-    line-height: 30px;
+  display: inline-block;
+  font-size: 20px;
+  line-height: 30px;
 }
 
 .tooltip .tooltiptext {
   visibility: hidden;
-    width: 60px;
-    background-color: #8f8a8a;
-    color: white;
-    text-align: center;
-    border-radius: 6px;
-    position: absolute;
-    z-index: 1;
-    font-size: 15px;
-    margin-left: 5px;
-    height: 30px;
-  
-    top: -20px;
+  width: max-content;
+  background-color: #746e6e;
+  color: white;
+  text-align: center;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  font-size: 15px;
+  margin-left: 5px;
+  height: 30px;
+  padding: 0px 10px;
+  top: -20px;
 }
 
 .tooltip:hover .tooltiptext {
   visibility: visible;
+}
+
+.tooltip:hover {
+  background-color: antiquewhite;
 }
