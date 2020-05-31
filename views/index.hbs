@@ -17,7 +17,7 @@
             </div>
         </div>
     </section>
-    <span id="activeTab">{{checkBy}}</span>
+    <span id="activeTab" style="display: none;">{{checkBy}}</span>
     <div id="content" class="container">
         <div class="row">
             <div class="col-xs-12 col-lg-offset-2 col-lg-8">
@@ -81,27 +81,65 @@
                         <div class="readability-results">
                             <div class="meanScore scale-d">
                                 {{#each arrTextInput}}
-                                <div class="tooltip"><span>{{text}}</span>
-                                 <span class="tooltiptext">
-                                        <span>Từ loại: {{type}}, </span> 
-                                        <span>Số lần xuất hiện: {{numberExist}}</span>
-                                        </span> </div>
+                                <div class="tooltip {{dataType.class}}"><span>{{text}}</span>
+                                    <span class="tooltiptext">
+                                        <span class="wordtype">Từ loại: {{dataType.type}}, </span>
+                                        <span class="frequency">Số lần xuất hiện: {{numberExist}},</span>
+                                        <span class="ranking">Thứ hạng: 100</span>
+                                    </span> </div>
                                 {{/each}}
                                 <p class="text--blue uppercase sans-serif--bold flush-bottom">Test Results:</p>
                                 <span></span>
-                                <p class="flush-top small-copy">Your page (https://github.com/words/dale-chall-formula)
-                                    has an average <strong>grade level of about 7</strong>. It should be easily
-                                    understood by 12 to 13 year olds.</p>
-                                <form method="POST"
-                                    action="https://www.twitter.com/home?status=The%20text%20on%20https://github.com/words/dale-chall-formula%20has%20an%20average%20grade%20level%20of%207.%20Check%20your%20page%27s%20readability%20score%20here!%20http://www.webfx.com/tools/read-able/"
-                                    target="_blank">
-                                    <button style="display:inline-block !important" type="submit" id="read-able-social"
-                                        class="social-button--twitter" href="https://twitter.com/" target="_blank"><span
-                                            class="icon-twitter4"></span></button>
-                                    <label style="display:inline-block">Tweet your results!</label>
-                                </form>
+                                <p class="flush-top small-copy" style="font-size: 20px !important;">Tài liệu bạn vừa
+                                    nhập có độ khó phù hợp cho người đọc <strong>{{readabilityLevel.ability}}</strong>
+                                    và độ tuổi thích hợp để đọc là <strong>{{readabilityLevel.age}}</strong></p>
+                                <div style="margin-bottom: 20px">
+                                    <input checked style="width: 20px; height: 20px" type="checkbox"
+                                        id="displayWordType">
+                                    <span style="padding-right: 1rem;"> Hiển thị từ loại</span>
+                                    <input checked style="width: 20px; height: 20px" type="checkbox"
+                                        id="displayFrequency">
+                                    <span style="padding-right: 1rem;"> Hiển thị tần suất xuất hiện</span>
+                                    <input checked style="width: 20px; height: 20px" type="checkbox"
+                                        id="displayRanking">
+                                    <span> Hiển thị thứ hạng</span>
+                                </div>
+                                <div class="dropdown">
+                                    <button onclick="myFunction()" class="dropbtn">Bộ lọc</button>
+                                    <div id="myDropdown" class="dropdown-content">
+                                        <div><input type="checkbox" onclick="changeColorType('Noun', 'red')"><span> Danh
+                                                từ</span> </div>
+                                        <div><input type="checkbox" onclick="changeColorType('Verb', 'blue')"> <span>
+                                                Động từ</span></div>
+                                        <div><input type="checkbox" onclick="changeColorType('Adjective', '#03f40b')">
+                                            <span> Tính từ</span></div>
+                                        <div><input type="checkbox" onclick="changeColorType('Pronoun', 'orange')">
+                                            <span> Đại từ</span></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <span>
+                                        <input style="width: 20px; height: 20px" type="checkbox">
+                                        Danh từ
+                                    </span>
+                                    <span>
+                                        <input style="width: 20px; height: 20px" type="checkbox">
+                                        Tính Từ
+                                    </span>
+                                    <span>
+                                        <input style="width: 20px; height: 20px" type="checkbox">
+                                        Trạng từ
+                                    </span>
+                                    <span>
+                                        <input style="width: 20px; height: 20px" type="checkbox">
+                                        Động từ
+                                    </span>
+                                </div>
+                                <div>
+                                    Thứ hạng(1 - 100): <input style="width: 36px;"> - <input style="width: 36px;">
+                                </div>
                             </div>
-                                 <div class="results">
+                            <div class="results">
                                 <p class="text--blue uppercase sans-serif--bold flush-bottom">Text Statistics</p>
                                 <table>
                                     <tbody>
@@ -137,12 +175,12 @@
                                             <td>{{dataResponse.number_of_character}}</td>
                                             <td></td>
                                         </tr>
-                                           <tr>
+                                        <tr>
                                             <th>No. of proper noun</th>
                                             <td>{{dataResponse.number_of_proper_noun}}</td>
                                             <td></td>
                                         </tr>
-                                                 <tr>
+                                        <tr>
                                             <th>No. of distinct proper noun</th>
                                             <td>{{dataResponse.number_of_distinct_proper_noun}}</td>
                                             <td></td>
@@ -189,7 +227,7 @@
                                                 <div class="scale"><span class="scale-c"></span></div>
                                             </td>
                                         </tr>
-                                                <tr>
+                                        <tr>
                                             <th>Percentage of Difficult Syllables </th>
                                             <td>{{dataResponse.pds}}</td>
                                             <td class="indicator">
@@ -203,35 +241,35 @@
                                                 <div class="scale"><span class="scale-e"></span></div>
                                             </td>
                                         </tr>
-                                          <tr>
+                                        <tr>
                                             <th>Percertage of Sino Vietnamese Word</th>
                                             <td>{{dataResponse.psvw}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span class="scale-e"></span></div>
                                             </td>
                                         </tr>
-                                             <tr>
+                                        <tr>
                                             <th>Percertage of Diaclet Word</th>
                                             <td>{{dataResponse.pdiadw}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span class="scale-e"></span></div>
                                             </td>
                                         </tr>
-                                               <tr>
+                                        <tr>
                                             <th>Luong An Vinh Fomula</th>
                                             <td>{{dataResponse.LAVFomula}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span class="scale-e"></span></div>
                                             </td>
                                         </tr>
-                                                         <tr>
+                                        <tr>
                                             <th>Liem Thanh Nguyen and Alan B. Henkin Fomula 1982</th>
                                             <td>{{dataResponse.NH1982}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span class="scale-e"></span></div>
                                             </td>
                                         </tr>
-                                               <tr>
+                                        <tr>
                                             <th>Liem Thanh Nguyen and Alan B. Henkin Fomula 1985</th>
                                             <td>{{dataResponse.NH1985}}</td>
                                             <td class="indicator">
@@ -252,6 +290,30 @@
     </div>
     </div>
 </section>
+
+<script>
+    /* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    // Close the dropdown if the user clicks outside of it
+    window.onclick = function (event) {
+        if (!event.target.matches('.dropbtn') && event.target.id !== "myDropdown" && !$(event.target).parents(
+                "#myDropdown").length) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+</script>
+
 <script>
     function changeActiveTab(tab) {
         console.log(tab);
@@ -276,5 +338,45 @@
         }
     }
     checkActiveTab();
+    $('#displayWordType').click(function () {
+        if ($('#displayWordType').is(":checked")) {
+            $('.wordtype').show();
+        } else {
+            $('.wordtype').hide();
+        }
+    });
+    $('#displayFrequency').click(function () {
+        if ($('#displayFrequency').is(":checked")) {
+            $('.frequency').show();
+        } else {
+            $('.frequency').hide();
+        }
+    });
+    $('#displayRanking').click(function () {
+        if ($('#displayRanking').is(':checked')) {
+            $('.ranking').show();
+        } else {
+            $('.ranking').hide();
+        }
+    });
+
+    function hexc(colorval) {
+        var parts = colorval.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+        delete(parts[0]);
+        for (var i = 1; i <= 3; ++i) {
+            parts[i] = parseInt(parts[i]).toString(16);
+            if (parts[i].length == 1) parts[i] = '0' + parts[i];
+        }
+        return '#' + parts.join('');
+    }
+
+    function changeColorType(dataType, color) {
+        console.log('hahahahah', dataType);
+        let currentcolor = $(`.${dataType}`).css('color');
+        console.log('currentcolorbefore---', currentcolor);
+        currentcolor = hexc(currentcolor);
+        console.log('currentcolor---', currentcolor);
+        $(`.${dataType}`).css('color', currentcolor == '#666666' ? color : '#666666');
+    }
 </script>
 {{!-- {{>footer}} --}}

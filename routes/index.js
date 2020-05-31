@@ -11,39 +11,40 @@ var fileName = '';
 const PATH = "./uploads";
 
 const DATATYPE = {
-  A: 'Tính từ',
-  Ab: 'Tính từ mượn',
-  B: 'Từ mượn',
-  C: 'Liên từ',
-  Cc: 'Liên từ đẳng lập',
-  CH: 'Dấu câu',
-  E: 'Giới từ',
-  Fw: 'Từ nước ngoài',
-  FW: 'Từ nước ngoài',
-  I: 'Thán từ',
-  L: 'Định từ',
-  M: 'Số từ',
-  N: 'Danh từ',
-  Nb: 'Danh từ mượn',
-  Nc: 'Danh từ chỉ loại',
-  Ne: '',
-  Ni: 'Danh từ kí hiệu',
-  Np: 'Danh từ riêng',
-  NNP: '',
-  Ns: '',
-  Nu: 'Danh từ đơn vị',
-  Ny: 'Danh từ viết tắt',
-  P: 'Đại từ',
-  R: 'Phó từ',
-  S: '',
-  T: 'Trợ từ',
-  V: 'Động từ',
-  Vb: 'Động từ mượn',
-  Vy: 'Động từ viết tắt',
-  X: 'Không phân loại',
-  Y: '',
-  Z: ''
-}
+  A: { type: 'Tính từ', class: 'Adjective'},
+  Ab: { type: 'Tính từ mượn', class: 'Adjective'},
+  B: { type: 'Từ mượn', class: 'Adjective'},
+  C: { type: 'Liên từ', class: 'Coordinating'},
+  Cc: { type: 'Liên từ đẳng lập', class: 'Subordinating'},
+  CH: { type: 'Dấu câu', class: 'Chunk'},
+  E: { type: 'Giới từ', class: 'Adposition'},
+  Fw: { type: 'Từ nước ngoài', class: 'ForeignWord'},
+  FW: { type: 'Từ nước ngoài', class: 'ForeignWord'},
+  I: { type: 'Thán từ', class: 'Interjection'},
+  L: { type: 'Định từ', class: 'Determiner'},
+  M: { type: 'Số từ', class: 'Numeral'},
+  N: { type: 'Danh từ', class: 'Noun'},
+  Nb: { type: 'Danh từ mượn', class: 'Noun'},
+  Nc: { type: 'Danh từ chỉ loại', class: 'Noun'},
+  Ne: { type: '', class: ''},
+  Ni: { type: 'Danh từ kí hiệu', class: 'Noun'},
+  Np: { type: 'Danh từ riêng', class: 'Noun'},
+  NNP: { type: '', class: ''},
+  Ns: { type: '', class: ''},
+  Nu: { type:  'Danh từ đơn vị', class: 'Noun'},
+  Ny: { type: 'Danh từ viết tắt', class: 'Noun'},
+  P: { type: 'Đại từ', class: 'Pronoun'},
+  R: { type: 'Phó từ', class: 'PronounR'},
+  S: { type: '', class: ''},
+  T: { type: 'Trợ từ', class: 'Particle'},
+  V: { type: 'Động từ', class: 'Verb'},
+  Vb: { type: 'Động từ mượn', class: 'Verb'},
+  Vy: { type: 'Động từ viết tắt', class: 'Verb'},
+  X: { type: 'Không phân loại', class: 'null'},
+  Y: { type: '', class: ''},
+  Z: { type: '', class: ''}
+};
+const ReadabilityTextLevel = ['', {ability: 'từ lớp 2 tới lớp 5', age: 'từ 7 tới 10 tuổi'}, {ability: 'từ lớp 6 tới lớp 9', age: 'từ 11 tới 14 tuổi'}, {ability: 'từ lớp 10 trở lên', age: 'từ 16 tuổi trở lên'}];
 var Storage = multer.diskStorage({
   destination: function (req, file, callback) {
     console.log('destination----');
@@ -86,10 +87,10 @@ function handleData(directInput, res, checkBy) {
     const arrTextInput = [];
     posTag.forEach(element => {
       const numberExist = wordCounter[element[0]];
-      const type = DATATYPE[element[1]];
+      const dataType = DATATYPE[element[1]];
       const obj = {
         text: element[0],
-        type,
+        dataType,
         numberExist
       }
       arrTextInput.push(obj);
@@ -100,12 +101,14 @@ function handleData(directInput, res, checkBy) {
         result[key] = Math.round(result[key]*1000)/1000;
       }
     }
+    const level = result.readabiity;
 
     res.render('index', {
       ischecked: true,
       arrTextInput,
       checkBy,
-      dataResponse: result
+      dataResponse: result,
+      readabilityLevel: ReadabilityTextLevel[level]
     });
   });
 }

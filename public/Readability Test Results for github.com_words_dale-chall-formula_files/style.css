@@ -1619,7 +1619,6 @@ a[href^="tel"] {color:#fff;}
 .clear-right {float:right; clear:right;}
 .last {margin-right:0 !important;}
 
-strong {font-weight:normal;}
 
 
 @media screen and (max-width:1024px) {
