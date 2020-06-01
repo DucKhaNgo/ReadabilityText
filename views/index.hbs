@@ -373,9 +373,7 @@ toggle between hiding and showing the dropdown content */
     function changeColorType(dataType, color) {
         console.log('hahahahah', dataType);
         let currentcolor = $(`.${dataType}`).css('color');
-        console.log('currentcolorbefore---', currentcolor);
         currentcolor = hexc(currentcolor);
-        console.log('currentcolor---', currentcolor);
         $(`.${dataType}`).css('color', currentcolor == '#666666' ? color : '#666666');
     }
 </script>
