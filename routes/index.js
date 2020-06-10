@@ -176,7 +176,7 @@ router.get('/', function (req, res, next) {
 function handleData(directInput, res, checkBy) {
   axios({
     method: 'post',
-    url: 'http://localhost:8000/text_analysis/',
+    url: 'https://readabilityhcmus.herokuapp.com/text_analysis/',
     data: `input_text=${directInput}`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
