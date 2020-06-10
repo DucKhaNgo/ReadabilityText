@@ -25,7 +25,7 @@
 
                 <div id="tabs" class="ui-tabs-nav">
                     <ul class="center">
-                        <li class="ui-state-active" onclick="changeActiveTab('direct')"><a class="btn gray"
+                        <li id="tab-direct" class="ui-state-active" onclick="changeActiveTab('direct')"><a class="btn gray"
                                 href="https://www.webfx.com/tools/read-able/check.php?tab=Test+By+Url&amp;uri=https%3A%2F%2Fgithub.com%2Fwords%2Fdale-chall-formula#tabs-2"
                                 data-tab="Test by Direct Link">Test by Direct Input</a></li>
                         <li id="tab-referer" onclick="changeActiveTab('file')"><a class="btn gray"
@@ -109,33 +109,19 @@
                                     <div id="myDropdown" class="dropdown-content">
                                         <div><input type="checkbox" onclick="changeColorType('Noun', 'red')"><span> Danh
                                                 từ</span> </div>
+                                        <div class="block"></div>
                                         <div><input type="checkbox" onclick="changeColorType('Verb', 'blue')"> <span>
                                                 Động từ</span></div>
+                                        <div class="block"></div>
+
                                         <div><input type="checkbox" onclick="changeColorType('Adjective', '#03f40b')">
                                             <span> Tính từ</span></div>
+                                        <div class="block"></div>
                                         <div><input type="checkbox" onclick="changeColorType('Pronoun', 'orange')">
                                             <span> Đại từ</span></div>
                                     </div>
                                 </div>
-                                <div>
-                                    <span>
-                                        <input style="width: 20px; height: 20px" type="checkbox">
-                                        Danh từ
-                                    </span>
-                                    <span>
-                                        <input style="width: 20px; height: 20px" type="checkbox">
-                                        Tính Từ
-                                    </span>
-                                    <span>
-                                        <input style="width: 20px; height: 20px" type="checkbox">
-                                        Trạng từ
-                                    </span>
-                                    <span>
-                                        <input style="width: 20px; height: 20px" type="checkbox">
-                                        Động từ
-                                    </span>
-                                </div>
-                                <div>
+                                <div class="mr-t-10">
                                     Thứ hạng(1 - 100): <input style="width: 36px;"> - <input style="width: 36px;">
                                 </div>
                             </div>
@@ -188,90 +174,90 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="results">
+                            <div class="results listpercent">
                                 <p class="text--blue uppercase sans-serif--bold flush-bottom">Readability Indices</p>
                                 <table>
                                     <tbody>
                                         <tr>
                                             <th>Avg. sentence length calculated by words</th>
-                                            <td>{{dataResponse.aslw}}</td>
+                                            <td class="indices">{{dataResponse.aslw}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span class="scale-c"></span></div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>Avg. sentence length calculated by syllables</th>
-                                            <td>{{dataResponse.asls}}</td>
+                                            <td class="indices">{{dataResponse.asls}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span class="scale-d"></span></div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>Avg. sentence length calculated by characters</th>
-                                            <td>{{dataResponse.aslc}}</td>
+                                            <td class="indices">{{dataResponse.aslc}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span class="scale-d"></span></div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>Avg. word length calculated by syllables</th>
-                                            <td>{{dataResponse.awls}}</td>
+                                            <td class="indices">{{dataResponse.awls}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span class="scale-d"></span></div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>Avg. word length calculated by characters</th>
-                                            <td>{{dataResponse.awlc}}</td>
+                                            <td class="indices">{{dataResponse.awlc}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span class="scale-c"></span></div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>Percentage of Difficult Syllables </th>
-                                            <td>{{dataResponse.pds}}</td>
+                                            <td class="indices percent">{{dataResponse.pds}}</td>
                                             <td class="indicator">
-                                                <div class="scale"><span class="scale-e"></span></div>
+                                                <div class="scale"><span></span></div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>Percentage of Difficult Words</th>
-                                            <td>{{dataResponse.pdw}}</td>
+                                            <td class="indices percent">{{dataResponse.pdw}}</td>
                                             <td class="indicator">
-                                                <div class="scale"><span class="scale-e"></span></div>
+                                                <div class="scale"><span></span></div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>Percertage of Sino Vietnamese Word</th>
-                                            <td>{{dataResponse.psvw}}</td>
+                                            <td class="indices percent">{{dataResponse.psvw}}</td>
                                             <td class="indicator">
-                                                <div class="scale"><span class="scale-e"></span></div>
+                                                <div class="scale"><span></span></div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>Percertage of Diaclet Word</th>
-                                            <td>{{dataResponse.pdiadw}}</td>
+                                            <td class="indices percent">{{dataResponse.pdiadw}}</td>
                                             <td class="indicator">
-                                                <div class="scale"><span class="scale-e"></span></div>
+                                                <div class="scale"><span></span></div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>Luong An Vinh Fomula</th>
-                                            <td>{{dataResponse.LAVFomula}}</td>
+                                            <td class="indices">{{dataResponse.LAVFomula}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span class="scale-e"></span></div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>Liem Thanh Nguyen and Alan B. Henkin Fomula 1982</th>
-                                            <td>{{dataResponse.NH1982}}</td>
+                                            <td class="indices">{{dataResponse.NH1982}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span class="scale-e"></span></div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>Liem Thanh Nguyen and Alan B. Henkin Fomula 1985</th>
-                                            <td>{{dataResponse.NH1985}}</td>
+                                            <td class="indices">{{dataResponse.NH1985}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span class="scale-e"></span></div>
                                             </td>
@@ -335,6 +321,8 @@ toggle between hiding and showing the dropdown content */
             $('#tabs-3').addClass('ui-state-active');
             $('#tabs-2').removeClass('ui-state-active');
             $('#tabs-1').removeClass('ui-state-active');
+            $('#tab-referer').addClass('ui-state-active');
+            $('#tab-direct').removeClass('ui-state-active');
         }
     }
     checkActiveTab();
@@ -371,10 +359,44 @@ toggle between hiding and showing the dropdown content */
     }
 
     function changeColorType(dataType, color) {
+        console.log("changeColorType -> color", color);
         console.log('hahahahah', dataType);
-        let currentcolor = $(`.${dataType}`).css('color');
+        let currentcolor = $(`.${dataType}`).css('text-decoration-color');
+        console.log('currentcolor before---', currentcolor);
         currentcolor = hexc(currentcolor);
-        $(`.${dataType}`).css('color', currentcolor == '#666666' ? color : '#666666');
+        console.log('currentcolor after----', currentcolor);
+        $(`.${dataType}`).css('text-decoration', currentcolor == '#666666' ? 'underline' : 'none');
+        $(`.${dataType}`).css('text-decoration-color', currentcolor == '#666666' ? color : '#666666');
+
     }
+
+    function converpercent() {
+        let arrpercent = $('.percent');
+        arrpercent.each(function(index) {
+            let text = $(this).text();
+              text = (parseFloat(text)*100).toFixed(2) + '%';
+            $( this ).text(text);
+        });
+     //   for (let i = 0; i< arrpercent.length; i++) {
+     //       console.log('arrpercent---', arrpercent[i]);
+           // let text = arrpercent[i].text();
+         //   text = parseFloat(text)*100 + '%';
+         //   console.log('text ne---', text);
+      //  }
+    }
+    converpercent();
+    let listrange = [{min: 0, max: 20, class: 'scale-a'}, {min: 21, max: 40, class: 'scale-b'}, {min: 41, max: 60, class: 'scale-c'}, {min: 61, max: 80, class: 'scale-d'}, {min: 81, max: 100, class: 'scale-e'}];
+    $('.listpercent table tbody > tr').each(function(index, elements) {
+        console.log('hahaha---', $(this).find('td.percent').text());
+        let td = $(this).find('td.percent');
+        let percent = parseFloat(td.text());
+        if (percent) {
+            listrange.forEach(range => {
+                if (percent >= range.min && percent <= range.max) {
+                    $(elements).find('td > div > span').addClass(range.class);
+                }
+            })
+        }
+    });
 </script>
 {{!-- {{>footer}} --}}

@@ -210,20 +210,20 @@ body{
     .results .scale-c{
         background: #d0c90c;
         top: 0;
-        left: 60%;
+        left: 40%;
     }
 
     .results .scale-d{
         background: #75a53e;
         top: 0;
-        left: 80%;
+        left: 60%;
     }
 
     .results .scale-e{
         background: #186932;
         border-radius:  0px 5px 5px 0px;
         top: 0;
-        right: 0
+        left: 80%
     }
 
 @media(min-width: 600px){

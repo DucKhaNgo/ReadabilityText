@@ -11,40 +11,145 @@ var fileName = '';
 const PATH = "./uploads";
 
 const DATATYPE = {
-  A: { type: 'Tính từ', class: 'Adjective'},
-  Ab: { type: 'Tính từ mượn', class: 'Adjective'},
-  B: { type: 'Từ mượn', class: 'Adjective'},
-  C: { type: 'Liên từ', class: 'Coordinating'},
-  Cc: { type: 'Liên từ đẳng lập', class: 'Subordinating'},
-  CH: { type: 'Dấu câu', class: 'Chunk'},
-  E: { type: 'Giới từ', class: 'Adposition'},
-  Fw: { type: 'Từ nước ngoài', class: 'ForeignWord'},
-  FW: { type: 'Từ nước ngoài', class: 'ForeignWord'},
-  I: { type: 'Thán từ', class: 'Interjection'},
-  L: { type: 'Định từ', class: 'Determiner'},
-  M: { type: 'Số từ', class: 'Numeral'},
-  N: { type: 'Danh từ', class: 'Noun'},
-  Nb: { type: 'Danh từ mượn', class: 'Noun'},
-  Nc: { type: 'Danh từ chỉ loại', class: 'Noun'},
-  Ne: { type: '', class: ''},
-  Ni: { type: 'Danh từ kí hiệu', class: 'Noun'},
-  Np: { type: 'Danh từ riêng', class: 'Noun'},
-  NNP: { type: '', class: ''},
-  Ns: { type: '', class: ''},
-  Nu: { type:  'Danh từ đơn vị', class: 'Noun'},
-  Ny: { type: 'Danh từ viết tắt', class: 'Noun'},
-  P: { type: 'Đại từ', class: 'Pronoun'},
-  R: { type: 'Phó từ', class: 'PronounR'},
-  S: { type: '', class: ''},
-  T: { type: 'Trợ từ', class: 'Particle'},
-  V: { type: 'Động từ', class: 'Verb'},
-  Vb: { type: 'Động từ mượn', class: 'Verb'},
-  Vy: { type: 'Động từ viết tắt', class: 'Verb'},
-  X: { type: 'Không phân loại', class: 'null'},
-  Y: { type: '', class: ''},
-  Z: { type: '', class: ''}
+  A: {
+    type: 'Tính từ',
+    class: 'Adjective'
+  },
+  Ab: {
+    type: 'Tính từ mượn',
+    class: 'Adjective'
+  },
+  B: {
+    type: 'Từ mượn',
+    class: 'Adjective'
+  },
+  C: {
+    type: 'Liên từ',
+    class: 'Coordinating'
+  },
+  Cc: {
+    type: 'Liên từ đẳng lập',
+    class: 'Subordinating'
+  },
+  CH: {
+    type: 'Dấu câu',
+    class: 'Chunk'
+  },
+  E: {
+    type: 'Giới từ',
+    class: 'Adposition'
+  },
+  Fw: {
+    type: 'Từ nước ngoài',
+    class: 'ForeignWord'
+  },
+  FW: {
+    type: 'Từ nước ngoài',
+    class: 'ForeignWord'
+  },
+  I: {
+    type: 'Thán từ',
+    class: 'Interjection'
+  },
+  L: {
+    type: 'Định từ',
+    class: 'Determiner'
+  },
+  M: {
+    type: 'Số từ',
+    class: 'Numeral'
+  },
+  N: {
+    type: 'Danh từ',
+    class: 'Noun'
+  },
+  Nb: {
+    type: 'Danh từ mượn',
+    class: 'Noun'
+  },
+  Nc: {
+    type: 'Danh từ chỉ loại',
+    class: 'Noun'
+  },
+  Ne: {
+    type: '',
+    class: ''
+  },
+  Ni: {
+    type: 'Danh từ kí hiệu',
+    class: 'Noun'
+  },
+  Np: {
+    type: 'Danh từ riêng',
+    class: 'Noun'
+  },
+  NNP: {
+    type: '',
+    class: ''
+  },
+  Ns: {
+    type: '',
+    class: ''
+  },
+  Nu: {
+    type: 'Danh từ đơn vị',
+    class: 'Noun'
+  },
+  Ny: {
+    type: 'Danh từ viết tắt',
+    class: 'Noun'
+  },
+  P: {
+    type: 'Đại từ',
+    class: 'Pronoun'
+  },
+  R: {
+    type: 'Phó từ',
+    class: 'PronounR'
+  },
+  S: {
+    type: '',
+    class: ''
+  },
+  T: {
+    type: 'Trợ từ',
+    class: 'Particle'
+  },
+  V: {
+    type: 'Động từ',
+    class: 'Verb'
+  },
+  Vb: {
+    type: 'Động từ mượn',
+    class: 'Verb'
+  },
+  Vy: {
+    type: 'Động từ viết tắt',
+    class: 'Verb'
+  },
+  X: {
+    type: 'Không phân loại',
+    class: 'null'
+  },
+  Y: {
+    type: '',
+    class: ''
+  },
+  Z: {
+    type: '',
+    class: ''
+  }
 };
-const ReadabilityTextLevel = ['', {ability: 'từ lớp 2 tới lớp 5', age: 'từ 7 tới 10 tuổi'}, {ability: 'từ lớp 6 tới lớp 9', age: 'từ 11 tới 14 tuổi'}, {ability: 'từ lớp 10 trở lên', age: 'từ 16 tuổi trở lên'}];
+const ReadabilityTextLevel = ['', {
+  ability: 'từ lớp 2 tới lớp 5',
+  age: 'từ 7 tới 10 tuổi'
+}, {
+  ability: 'từ lớp 6 tới lớp 9',
+  age: 'từ 11 tới 14 tuổi'
+}, {
+  ability: 'từ lớp 10 trở lên',
+  age: 'từ 16 tuổi trở lên'
+}];
 var Storage = multer.diskStorage({
   destination: function (req, file, callback) {
     console.log('destination----');
@@ -71,7 +176,7 @@ router.get('/', function (req, res, next) {
 function handleData(directInput, res, checkBy) {
   axios({
     method: 'post',
-    url: 'https://readabilityhcmus.herokuapp.com/text_analysis/',
+    url: 'http://localhost:8000/text_analysis/',
     data: `input_text=${directInput}`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -98,7 +203,7 @@ function handleData(directInput, res, checkBy) {
     // convert float numbet to 3 number after .
     for (const key in result) {
       if (typeof result[key] === 'number') {
-        result[key] = Math.round(result[key]*1000)/1000;
+        result[key] = Math.round(result[key] * 1000) / 1000;
       }
     }
     const level = result.readabiity;
@@ -110,6 +215,9 @@ function handleData(directInput, res, checkBy) {
       dataResponse: result,
       readabilityLevel: ReadabilityTextLevel[level]
     });
+  }).catch(error => {
+    console.log('error----', error);
+    res.send(400)
   });
 }
 router.post('/checkByDirect', function (req, res, next) {
@@ -134,6 +242,7 @@ router.post('/checkByFile', upload.single('fileData'), (req, res) => {
       handleData(text, res, 'file');
     });
   } catch (err) {
+    console.log('error---', error);
     res.send(400);
   }
 });
