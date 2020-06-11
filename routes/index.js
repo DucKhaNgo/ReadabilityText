@@ -21,7 +21,7 @@ const DATATYPE = {
   },
   B: {
     type: 'Từ mượn',
-    class: 'Adjective'
+    class: 'Borrow'
   },
   C: {
     type: 'Liên từ',
@@ -176,7 +176,7 @@ router.get('/', function (req, res, next) {
 function handleData(directInput, res, checkBy) {
   axios({
     method: 'post',
-    url: 'https://readabilityhcmus.herokuapp.com/text_analysis/',
+    url: 'http://localhost:8000/text_analysis/',
     data: `input_text=${directInput}`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -217,7 +217,7 @@ function handleData(directInput, res, checkBy) {
     });
   }).catch(error => {
     console.log('error----', error);
-    res.send(400)
+    res.send(400, error);
   });
 }
 router.post('/checkByDirect', function (req, res, next) {
