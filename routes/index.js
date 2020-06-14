@@ -176,7 +176,7 @@ router.get('/', function (req, res, next) {
 function handleData(directInput, res, checkBy) {
   axios({
     method: 'post',
-    url: 'http://localhost:8000/text_analysis/',
+    url: 'https://readabilityhcmus.herokuapp.com/text_analysis/',
     data: `input_text=${directInput}`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -185,7 +185,8 @@ function handleData(directInput, res, checkBy) {
     result = result.data;
     const {
       posTag,
-      wordCounter
+      wordCounter,
+      wordRanking
     } = result;
 
     // mapping posTag and wordCounter
@@ -193,10 +194,14 @@ function handleData(directInput, res, checkBy) {
     posTag.forEach(element => {
       const numberExist = wordCounter[element[0]];
       const dataType = DATATYPE[element[1]];
+      const ranking = wordRanking[element[0].toLowerCase()];
+      console.log('word----',element[0], ', ranking-----', ranking);
+      console.log('word---', )
       const obj = {
         text: element[0],
         dataType,
-        numberExist
+        numberExist,
+        ranking
       }
       arrTextInput.push(obj);
     });
@@ -228,7 +233,9 @@ router.post('/checkByDirect', function (req, res, next) {
     const {
       directInput
     } = req.body;
-    handleData(directInput, res, 'direct');
+    if (directInput) {
+      handleData(directInput, res, 'direct');
+    }
   } catch (error) {
     console.log('error---', error);
     res.send(400);

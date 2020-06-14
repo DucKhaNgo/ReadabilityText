@@ -5,13 +5,12 @@
             <div class="row">
                 <div class="col-xs-12">
                     <h1>
-                        <span class="uppercase biggest">Readability Test Tool</span><br>
+                        <span class="uppercase biggest">Công cụ đánh giá độ khó văn bản tiếng Việt</span><br>
                     </h1>
                 </div>
                 <div class="col-xs-12 col-md-offset-2 col-md-8">
                     <h2>
-                        <span class="serif big text--white">Quick and easy way to test the readability of your
-                            work.</span>
+                        <span class="serif big text--white">Cách nhanh nhất và đơn giản nhất để đánh giá độ khó văn bản của bạn</span>
                     </h2>
                 </div>
             </div>
@@ -28,34 +27,34 @@
                         <li id="tab-direct" class="ui-state-active" onclick="changeActiveTab('direct')"><a
                                 class="btn gray"
                                 href="https://www.webfx.com/tools/read-able/check.php?tab=Test+By+Url&amp;uri=https%3A%2F%2Fgithub.com%2Fwords%2Fdale-chall-formula#tabs-2"
-                                data-tab="Test by Direct Link">Test by Direct Input</a></li>
+                                data-tab="Test by Direct Link">Đánh giá theo văn bản nhập tay</a></li>
                         <li id="tab-referer" onclick="changeActiveTab('file')"><a class="btn gray"
                                 href="https://www.webfx.com/tools/read-able/check.php?tab=Test+By+Url&amp;uri=https%3A%2F%2Fgithub.com%2Fwords%2Fdale-chall-formula#tabs-3"
-                                data-tab="Test by File Word">Test by File Word</a></li>
+                                data-tab="Test by File Word">Đánh giá theo file Word</a></li>
                     </ul>
                     <div id="tabs-2" class="ui-state-active tab-content">
-                        <h1>Test by Direct Input</h1>
+                        <h1>Đánh giá theo văn bản nhập tay</h1>
                         <form method="post" action="/checkByDirect" class="main-form">
                             <input type="hidden" class="js-selected-tab" name="tab" value="Test by Direct Link">
                             <fieldset>
                                 <div class="form-row">
                                     <!--<label title="Paste a complete (HTML) Document here" for="directInput">Enter text to check the readability:</label><br />-->
                                     <textarea id="directInput" name="directInput" rows="10" cols="60"
-                                        placeholder="Enter text to check the readability:">{{text}}</textarea>
+                                        placeholder="Nhập văn bản để đánh giá độ khó:">{{text}}</textarea>
 
                                     <p class="text--white italic smaller-copy"> HTML is allowed - it will be stripped
                                         from the text. </p>
-                                    <input type="submit" value="Calculate Readability" class="btn blue push-top">
+                                    <input type="submit" value="Đánh giá độ khó văn bản" class="btn blue push-top">
                                 </div>
                             </fieldset>
                         </form>
                     </div>
 
                     <div id="tabs-3" class="tab-content">
-                        <h1>Test by Input file</h1>
+                        <h1>Đánh giá theo file word</h1>
                         <form method="POST" action="/checkByFile" enctype="multipart/form-data">
                             <input type="file" name="fileData" style=" background: white; ">
-                            <input type="submit" value="Calculate Readability" class="btn blue push-top">
+                            <input type="submit" value="Đánh giá độ khó văn bản" class="btn blue push-top">
                         </form>
 
                         <p class="text--white italic small-copy">This will eliminate testing for navigational elements.
@@ -86,7 +85,7 @@
                                     <span class="tooltiptext">
                                         <span class="wordtype">Từ loại: {{dataType.type}}, </span>
                                         <span class="frequency">Số lần xuất hiện: {{numberExist}},</span>
-                                        <span class="ranking">Thứ hạng: 100</span>
+                                        <span class="ranking">Thứ hạng: <span class="currentRank">{{ranking}}</span></span>
                                     </span> </div>
                                 {{/each}}
                                 <p class="text--blue uppercase sans-serif--bold flush-bottom">Test Results:</p>
@@ -142,48 +141,48 @@
                                 </div>
                             </div>
                             <div class="results">
-                                <p class="text--blue uppercase sans-serif--bold flush-bottom">Text Statistics</p>
+                                <p class="text--blue uppercase sans-serif--bold flush-bottom">Thống kê văn bản</p>
                                 <table>
                                     <tbody>
                                         <tr>
-                                            <th>No. of sentences</th>
+                                            <th>Số lượng câu</th>
                                             <td>{{dataResponse.number_of_sentence}}</td>
                                             <td class="indicator"></td>
                                         </tr>
                                         <tr>
-                                            <th>No. of words</th>
+                                            <th>Số từ</th>
                                             <td>{{dataResponse.number_of_word}}</td>
                                             <td></td>
                                         </tr>
 
                                         <tr>
-                                            <th>No. of distinct words</th>
+                                            <th>Số từ riêng biệt</th>
                                             <td>{{dataResponse.number_of_distinct_word}}</td>
                                             <td></td>
                                         </tr>
 
                                         <tr>
-                                            <th>No. of syllable</th>
+                                            <th>Số âm tiết</th>
                                             <td>{{dataResponse.number_of_syllable}}</td>
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <th>No. of distinct syllable</th>
+                                            <th>Số âm tiết riêng biệt</th>
                                             <td>{{dataResponse.number_of_distinct_syllable}}</td>
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <th>No. of character</th>
+                                            <th>Số kí tự</th>
                                             <td>{{dataResponse.number_of_character}}</td>
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <th>No. of proper noun</th>
+                                            <th>Số danh từ riêng</th>
                                             <td>{{dataResponse.number_of_proper_noun}}</td>
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <th>No. of distinct proper noun</th>
+                                            <th>Số danh từ riêng riêng biệt</th>
                                             <td>{{dataResponse.number_of_distinct_proper_noun}}</td>
                                             <td></td>
                                         </tr>
@@ -191,88 +190,88 @@
                                 </table>
                             </div>
                             <div class="results listpercent">
-                                <p class="text--blue uppercase sans-serif--bold flush-bottom">Readability Indices</p>
+                                <p class="text--blue uppercase sans-serif--bold flush-bottom">Chỉ số đọc hiểu</p>
                                 <table>
                                     <tbody>
                                         <tr>
-                                            <th>Avg. sentence length calculated by words</th>
+                                            <th>Độ dài trung bình câu tính theo từ</th>
                                             <td class="indices">{{dataResponse.aslw}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span class="scale-c"></span></div>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>Avg. sentence length calculated by syllables</th>
+                                            <th>Độ dài trung bình câu tính theo âm tiết</th>
                                             <td class="indices">{{dataResponse.asls}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span class="scale-d"></span></div>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>Avg. sentence length calculated by characters</th>
+                                            <th>ĐỘ dài trung bình câu tính theo kí tự</th>
                                             <td class="indices">{{dataResponse.aslc}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span class="scale-d"></span></div>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>Avg. word length calculated by syllables</th>
+                                            <th>Độ dài trung bình từ tính theo âm tiết</th>
                                             <td class="indices">{{dataResponse.awls}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span class="scale-d"></span></div>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>Avg. word length calculated by characters</th>
+                                            <th>ĐỘ dài trung bình từ tính theo kí tự</th>
                                             <td class="indices">{{dataResponse.awlc}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span class="scale-c"></span></div>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>Percentage of Difficult Syllables </th>
+                                            <th>Phần trăm âm tiết khó</th>
                                             <td class="indices percent">{{dataResponse.pds}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span></span></div>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>Percentage of Difficult Words</th>
+                                            <th>Phần trăm từ khó</th>
                                             <td class="indices percent">{{dataResponse.pdw}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span></span></div>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>Percertage of Sino Vietnamese Word</th>
+                                            <th>Phần trăm chữ Hán Việt</th>
                                             <td class="indices percent">{{dataResponse.psvw}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span></span></div>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>Percertage of Diaclet Word</th>
+                                            <th>Phần trăm của từ phương ngữ</th>
                                             <td class="indices percent">{{dataResponse.pdiadw}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span></span></div>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>Luong An Vinh Fomula</th>
+                                            <th>Công thức củ Lương An Vinh</th>
                                             <td class="indices">{{dataResponse.LAVFomula}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span class="scale-e"></span></div>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>Liem Thanh Nguyen and Alan B. Henkin Fomula 1982</th>
+                                            <th>Công thức của Liem Thanh Nguyen and Alan B. Henkin 1982</th>
                                             <td class="indices">{{dataResponse.NH1982}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span class="scale-e"></span></div>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>Liem Thanh Nguyen and Alan B. Henkin Fomula 1985</th>
+                                            <th>Công thức của Liem Thanh Nguyen and Alan B. Henkin 1985</th>
                                             <td class="indices">{{dataResponse.NH1985}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span class="scale-e"></span></div>
