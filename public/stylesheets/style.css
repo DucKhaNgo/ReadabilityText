@@ -13,7 +13,13 @@
   font-size: 20px;
   line-height: 30px;
 }
-
+.mg-r {
+  margin-right: 1rem;
+}
+.bold {
+  font-weight: bold;
+  color: black;
+}
 .tooltip .tooltiptext {
   visibility: hidden;
   width: max-content;
@@ -89,4 +95,16 @@
 
 .mr-t-10 {
   margin-top: 10px; 
+}
+
+.filter {
+  display: flex;
+}
+
+.btnFilter {
+  color: rgb(255, 255, 255);
+    background-color: rgb(255, 57, 69);
+    border-radius: 5px;
+    width: 8vw;
+    font-size: 15px;
 }

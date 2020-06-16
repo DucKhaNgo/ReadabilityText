@@ -81,7 +81,7 @@
                         <div class="readability-results">
                             <div class="meanScore scale-d">
                                 {{#each arrTextInput}}
-                                <div class="tooltip {{dataType.class}}"><span>{{text}}</span>
+                                <div class="tooltip {{dataType.class}} wordRanking{{ranking}}"><span class="wordText">{{text}}</span>
                                     <span class="tooltiptext">
                                         <span class="wordtype">Từ loại: {{dataType.type}}, </span>
                                         <span class="frequency">Số lần xuất hiện: {{numberExist}},</span>
@@ -91,8 +91,8 @@
                                 <p class="text--blue uppercase sans-serif--bold flush-bottom">Test Results:</p>
                                 <span></span>
                                 <p class="flush-top small-copy" style="font-size: 20px !important;">Tài liệu bạn vừa
-                                    nhập có độ khó phù hợp cho người đọc <strong>{{readabilityLevel.ability}}</strong>
-                                    và độ tuổi thích hợp để đọc là <strong>{{readabilityLevel.age}}</strong></p>
+                                    nhập có độ khó phù hợp cho người đọc <strong class="bold">{{readabilityLevel.ability}}</strong>
+                                    và độ tuổi thích hợp để đọc là <strong class="bold">{{readabilityLevel.age}}</strong></p>
                                 <div style="margin-bottom: 20px">
                                     <input checked style="width: 20px; height: 20px" type="checkbox"
                                         id="displayWordType">
@@ -136,8 +136,9 @@
                                             <span> Giới từ</span></div>
                                     </div>
                                 </div>
-                                <div class="mr-t-10">
-                                    Thứ hạng(1 - 100): <input style="width: 36px;"> - <input style="width: 36px;">
+                                <div class="mr-t-10 filter">
+                                    <span>Thứ hạng(1 - 100):&nbsp;</span><input id="min-rank" min="1" max="100" style="width: 50px;">&nbsp;-&nbsp;<input min="1" max="100" id="max-rank" class="mg-r" style="width: 50px;">
+                                    <button class="btnFilter" id="btnFilter" onclick="filterRanking()">LỌC</button>
                                 </div>
                             </div>
                             <div class="results">
@@ -257,7 +258,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>Công thức củ Lương An Vinh</th>
+                                            <th>Công thức của Lương An Vinh</th>
                                             <td class="indices">{{dataResponse.LAVFomula}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span class="scale-e"></span></div>
@@ -433,5 +434,26 @@ toggle between hiding and showing the dropdown content */
             })
         }
     });
+    let filter = false;
+    function filterRanking() {
+        console.log('min---', $('#min-rank').val());
+        console.log('max---', $('#max-rank').val());
+        const min = parseInt($('#min-rank').val());
+        const max = parseInt($('#max-rank').val());
+        if (min < 1 || min > 100 || max <1 || max > 100 || !min || !max) {
+            alert('Vui lòng nhập trong khoảng 1 - 100');
+            return;
+        }
+    let tooltip = $('.tooltip');
+    $('#btnFilter').text(filter ? 'LỌC' : 'BỎ LỌC');
+    tooltip.each(function(index, elements) {
+        const rank = parseInt($(elements).find('.currentRank').text());
+        if (rank >=min && rank <= max) {
+            $(elements).find('.wordText').css('color', filter ? '#666666' : 'black');
+            $(elements).find('.wordText').css('font-weight', filter ? 'normal' : 'bold');
+        }
+    });
+    filter = !filter;
+    }
 </script>
 {{!-- {{>footer}} --}}
