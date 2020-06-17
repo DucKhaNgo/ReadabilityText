@@ -227,6 +227,10 @@ function handleData(directInput, res, checkBy) {
 }
 router.post('/checkByDirect', function (req, res, next) {
   console.log('req.body------', req.body);
+  if (!req.body || !req.body.directInput || !req.body.directInput.trim()) {
+    res.redirect('/');
+    return;
+  }
   // do something
   try {
 
@@ -246,6 +250,10 @@ router.post('/checkByFile', upload.single('fileData'), (req, res) => {
     textract.fromFileWithPath(`${PATH}/${fileName}`, function (err, text) {
       text = text.slice(0, text.length - 2);
       console.log('text-------', text);
+      if (!text || !text.trim()) {
+        res.redirect('/');
+        return;
+      }
       handleData(text, res, 'file');
     });
   } catch (err) {

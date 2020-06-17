@@ -50,7 +50,7 @@
   padding: 8px;
   font-size: 19px;
   border: none;
-  cursor: pointer;
+  /* cursor: pointer; */
   border-radius: 38px;
   width: 12vw;
 }
@@ -88,7 +88,10 @@
   text-decoration: none;
   display: block;
 }
-
+#myDropdown div:hover {
+  background-color: #b8b8b8;
+  cursor: default;
+}
 .dropdown a:hover {background-color: #ddd;}
 
 .show {display: block;}
