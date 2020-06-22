@@ -55,8 +55,6 @@
                             <input type="submit" value="Đánh giá độ khó văn bản" class="btn blue push-top">
                         </form>
 
-                        <p class="text--white italic small-copy">This will eliminate testing for navigational elements.
-                        </p>
                     </div>
                     {{#if ischecked}}
                     <div class="bg--dkblue soft">
@@ -86,7 +84,7 @@
                                         <span class="ranking">Thứ hạng: <span class="currentRank">{{ranking}}</span></span>
                                     </span> </div>
                                 {{/each}}
-                                <p class="text--blue uppercase sans-serif--bold flush-bottom">Test Results:</p>
+                                <p class="text--blue uppercase sans-serif--bold flush-bottom">Kết quả đánh giá:</p>
                                 <span></span>
                                 <p class="flush-top small-copy" style="font-size: 20px !important;">Tài liệu bạn vừa
                                     nhập có độ khó phù hợp cho người đọc <strong class="bold">{{readabilityLevel.ability}}</strong>
@@ -311,12 +309,14 @@ toggle between hiding and showing the dropdown content */
         console.log(tab);
         if (tab === 'direct') {
             $('#tabs-2').addClass('ui-state-active');
-            $('#tabs-1').removeClass('ui-state-active');
             $('#tabs-3').removeClass('ui-state-active');
+            $('#tab-direct').addClass('ui-state-active');
+            $('#tab-referer').removeClass('ui-state-active');
         } else if (tab === 'file') {
             $('#tabs-3').addClass('ui-state-active');
             $('#tabs-2').removeClass('ui-state-active');
-            $('#tabs-1').removeClass('ui-state-active');
+            $('#tab-referer').addClass('ui-state-active');
+            $('#tab-direct').removeClass('ui-state-active');
         }
     }
 
@@ -415,7 +415,7 @@ toggle between hiding and showing the dropdown content */
     $('.listpercent table tbody > tr').each(function (index, elements) {
         console.log('hahaha---', $(this).find('td.percent').text());
         let td = $(this).find('td.percent');
-        let percent = parseFloat(td.text());
+        let percent = parseInt(td.text());
         if (percent) {
             listrange.forEach(range => {
                 if (percent >= range.min && percent <= range.max) {

@@ -174,12 +174,14 @@ router.get('/', function (req, res, next) {
 });
 
 function handleData(directInput, res, checkBy) {
+  console.log(encodeURIComponent(directInput));
   axios({
     method: 'post',
     url: 'http://localhost:8000/text_analysis/',
-    data: `input_text=${directInput}`,
+    data: 'input_text=' + encodeURIComponent(directInput),
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
+      // 'Content-Type': 'application/x-www-form-urlencoded'
+      'accept': '*'
     }
   }).then(result => {
     result = result.data;
@@ -225,6 +227,7 @@ function handleData(directInput, res, checkBy) {
     res.send(400, error);
   });
 }
+
 router.post('/checkByDirect', function (req, res, next) {
   console.log('req.body------', req.body);
   if (!req.body || !req.body.directInput || !req.body.directInput.trim()) {
@@ -248,7 +251,7 @@ router.post('/checkByDirect', function (req, res, next) {
 router.post('/checkByFile', upload.single('fileData'), (req, res) => {
   try {
     textract.fromFileWithPath(`${PATH}/${fileName}`, function (err, text) {
-      text = text.slice(0, text.length - 2);
+      console.log("text before----", text);
       console.log('text-------', text);
       if (!text || !text.trim()) {
         res.redirect('/');
