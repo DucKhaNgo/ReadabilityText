@@ -77,9 +77,16 @@
                         <div class="readability-results">
                             <div class="meanScore scale-d">
                                 {{#each arrTextInput}}
-                                <div class="tooltip {{dataType.class}} wordRanking{{ranking}}"><span class="wordText">{{text}}</span>
+                                <div class="listWords tooltip {{dataType.class}} wordRanking{{ranking}}"><span class="wordText">{{text}}</span>
                                     <span class="tooltiptext">
                                         <span class="wordtype">Từ loại: {{dataType.type}}, </span>
+                                        <span class="frequency">Số lần xuất hiện: {{numberExist}},</span>
+                                        <span class="ranking">Thứ hạng: <span class="currentRank">{{ranking}}</span></span>
+                                    </span> </div>
+                                {{/each}}
+                                {{#each arrSylableInput}}
+                                   <div style="display: none;" class="listSylable tooltip wordRanking{{ranking}}"><span class="wordText">{{text}}</span>
+                                    <span class="tooltiptext">
                                         <span class="frequency">Số lần xuất hiện: {{numberExist}},</span>
                                         <span class="ranking">Thứ hạng: <span class="currentRank">{{ranking}}</span></span>
                                     </span> </div>
@@ -90,18 +97,22 @@
                                     nhập có độ khó phù hợp cho người đọc <strong class="bold">{{readabilityLevel.ability}}</strong>
                                     và độ tuổi thích hợp để đọc là <strong class="bold">{{readabilityLevel.age}}</strong></p>
                                 <div style="margin-bottom: 20px">
+                                    <input style="width: 20px; height: 20px" type="checkbox"
+                                        id="displaySylable">
+                                    <span style="padding-right: 1rem;"> Hiển thị tách <a style="color: #6868a2;" target="_blank" href="/show-ranking-sylable"> âm tiết</a></span>
                                     <input checked style="width: 20px; height: 20px" type="checkbox"
                                         id="displayWordType">
-                                    <span style="padding-right: 1rem;"> Hiển thị từ loại</span>
+                                    <span id="spandisplayWordType" style="padding-right: 1rem;"> Hiển thị từ loại</span>
                                     <input checked style="width: 20px; height: 20px" type="checkbox"
                                         id="displayFrequency">
                                     <span style="padding-right: 1rem;"> Hiển thị tần suất xuất hiện</span>
                                     <input checked style="width: 20px; height: 20px" type="checkbox"
                                         id="displayRanking">
-                                    <span> Hiển thị thứ hạng</span>
+                                    <span> Hiển thị <a id='hrefRanking' style="color: #6868a2;" target="_blank" href="/show-ranking-word">thứ hạng</a></span>
+                                    <div style="font-size: 15px; color: red">*Thứ hạng được sắp xếp theo thứ tự xuất hiện trong danh sách tần suất</div>
                                 </div>
                                 <div class="dropdown">
-                                    <button onclick="myFunction()" class="dropbtn">Bộ lọc</button>
+                                    <button id="btnShowFilter" onclick="myFunction()" class="dropbtn">Bộ lọc</button>
                                     <div id="myDropdown" class="dropdown-content">
                                         <div><input type="checkbox" onclick="changeColorType('Noun', '#FF0000')"><span> Danh
                                                 từ</span> </div>
@@ -124,8 +135,8 @@
                                             <span> Giới từ</span></div>
                                     </div>
                                 </div>
-                                <div class="mr-t-10 filter">
-                                    <span>Thứ hạng(1 - 100):&nbsp;</span><input id="min-rank" min="1" max="100" style="width: 50px;">&nbsp;-&nbsp;<input min="1" max="100" id="max-rank" class="mg-r" style="width: 50px;">
+                                <div class="mr-t-10 filter" id="divbtnFilter">
+                                    <span>Thứ hạng(1 - 100):&nbsp;</span><input type="number" id="min-rank" min="1" max="100" class="inputBtn">&nbsp;-&nbsp;<input type="number" min="1" max="100" id="max-rank" class="inputBtn mg-r">
                                     <button class="btnFilter" id="btnFilter" onclick="filterRanking()">LỌC</button>
                                 </div>
                             </div>
@@ -197,7 +208,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>ĐỘ dài trung bình câu tính theo kí tự</th>
+                                            <th>Độ dài trung bình câu tính theo kí tự</th>
                                             <td class="indices">{{dataResponse.aslc}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span class="scale-d"></span></div>
@@ -211,56 +222,67 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>ĐỘ dài trung bình từ tính theo kí tự</th>
+                                            <th>Độ dài trung bình từ tính theo kí tự</th>
                                             <td class="indices">{{dataResponse.awlc}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span class="scale-c"></span></div>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>Phần trăm âm tiết khó</th>
+                                            <th>Tỉ lệ <a style="color: #6868a2;" target="_blank" href="/am-tiet-thong-dung"> âm tiết khó</a>
+                                            <div style="font-size: 15px; color: #cacaca">Xem định nghĩa và cách tính tại <a style="color: #6868a2;" href="#defineSylable"> đây</a></div>
+                                            </th>
                                             <td class="indices percent">{{dataResponse.pds}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span></span></div>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>Phần trăm từ khó</th>
+                                            <th>Tỉ lệ <a style="color: #6868a2;" target="_blank" href="/tu-thong-dung"> từ khó</a>
+                                            <div style="font-size: 15px; color: #cacaca">Xem định nghĩa và cách tính tại <a style="color: #6868a2;" href="#defineWord"> đây</a></div>
+                                            
+                                            </th>
                                             <td class="indices percent">{{dataResponse.pdw}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span></span></div>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>Phần trăm chữ Hán Việt</th>
+                                            <th>Tỉ lệ từ <a style="color: #6868a2;" target="_blank" href="/han-viet">Hán Việt</a><p></p></th>
                                             <td class="indices percent">{{dataResponse.psvw}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span></span></div>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>Phần trăm của từ phương ngữ</th>
+                                            <th>Tỉ lệ của từ <a style="color: #6868a2;" target="_blank" href="phuong-ngu"> phương ngữ</a></th>
                                             <td class="indices percent">{{dataResponse.pdiadw}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span></span></div>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>Công thức của Lương An Vinh</th>
+                                            <th>Công thức của Lương An Vinh
+                                                 <div style="font-size: 15px; color: #cacaca">Xem định nghĩa công thức tại <a style="color: #6868a2;" href="#defineLAVFormula"> đây</a></div>
+                                            </th>
                                             <td class="indices">{{dataResponse.LAVFomula}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span class="scale-e"></span></div>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>Công thức của Liem Thanh Nguyen and Alan B. Henkin 1982</th>
+                                            <th>Công thức của Liem Thanh Nguyen and Alan B. Henkin 1982
+                                                            <div style="font-size: 15px; color: #cacaca">Xem định nghĩa công thức tại <a style="color: #6868a2;" href="#defineLTNFormula1982"> đây</a></div>
+                                            </th>
                                             <td class="indices">{{dataResponse.NH1982}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span class="scale-e"></span></div>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>Công thức của Liem Thanh Nguyen and Alan B. Henkin 1985</th>
+                                            <th>Công thức của Liem Thanh Nguyen and Alan B. Henkin 1985
+                                                <div style="font-size: 15px; color: #cacaca">Xem định nghĩa công thức tại <a style="color: #6868a2;" href="#defineLTNFormula1985"> đây</a></div>
+                                            </th>
                                             <td class="indices">{{dataResponse.NH1985}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span class="scale-e"></span></div>
@@ -269,6 +291,36 @@
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
+                        <h3 style="color: #f79900;">ĐỊNH NGHĨA</h3>
+                        <div class="define">
+                        <div class="item" id="defineSylable">
+                            <span>*Âm tiết khó được xác định bằng cách kiểm tra sự xuất hiện của âm tiết trong danh sách 3000 âm tiết thông dụng trong tiếng Việt, nếu âm tiết không xuất hiện trong danh sách thì đó là âm tiết khó</span>
+                        </div>
+                        <div class="item" id="defineWord">
+                            <span>*Từ khó được xác định bằng cách kiểm tra sự xuất hiện của âm tiết trong danh sách 3000 từ thông dụng trong tiếng Việt, nếu từ không xuất hiện trong danh sách thì đó là từ khó</span>
+                        </div>
+                        <div class="item" id='defineLAVFormula'>
+                            <span>*Công thức của Lương An Vinh được tính theo cách tính sau: </span>
+                            <div style="text-align: center;">
+                              Kết quả = 0.004*aslc + 0.1905*awlc + 2.7147*pdw - 0.7295
+                            </div>
+                        </div>
+                        <div class="item" id="defineLTNFormula1982">
+                            <span>*Công thức của Liem Thanh Nguyen and Alan B. Henkin 1982 được tính theo cách tính sau: </span>
+                            <div style="text-align: center;">
+                              Kết quả = 2*awlc + 0.2*aslc - 6
+                            </div>
+                        </div>
+                           <div class="item" id="defineLTNFormula1985">
+                            <span>*Công thức của Liem Thanh Nguyen and Alan B. Henkin 1985 được tính theo cách tính sau: </span>
+                            <div style="text-align: center;">
+                                <div>wdIndex =  pdw*100</div>
+                              Kết quả = 0.27*wdIndex + 0.13*aslc +1.74
+                            </div>
+                        </div>
+
+
                         </div>
                         {{else}}
 
@@ -332,6 +384,23 @@ toggle between hiding and showing the dropdown content */
         }
     }
     checkActiveTab();
+    $('#displaySylable').click(function() {
+        if ($('#displaySylable').is(':checked')) {
+            $('.listSylable').css('display', 'unset');
+            $('.listWords').css('display', 'none');
+            $("#displayWordType").attr('disabled', true);
+            $('#spandisplayWordType').css('color', '#a2a0a0');
+            $('.dropdown').css('display', 'none');
+            $('#hrefRanking').attr('href', '/show-ranking-sylable');
+        } else {
+            $('.listSylable').css('display', 'none');
+            $('.listWords').css('display', 'unset');
+            $("#displayWordType").attr('disabled', false);
+            $('#spandisplayWordType').css('color', '#666');
+            $('.dropdown').css('display', 'unset');
+            $('#hrefRanking').attr('href', '/show-ranking-word');
+        }
+    })
     $('#displayWordType').click(function () {
         if ($('#displayWordType').is(":checked")) {
             $('.wordtype').show();

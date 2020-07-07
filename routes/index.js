@@ -4,9 +4,7 @@ var checkReadabilytyController = require('../controller/checkReadabilty.controll
 var multer = require('multer');
 var textract = require('textract');
 var axios = require('axios');
-var http = require('http');
-var FormData = require('form-data');
-var fetch = require('fetch').fetchUrl;
+var fs = require('fs');
 var fileName = '';
 const PATH = "./uploads";
 
@@ -188,17 +186,35 @@ function handleData(directInput, res, checkBy) {
     const {
       posTag,
       wordCounter,
-      wordRanking
+      wordRanking,
+      SyllableRanking,
+      syllableCounter
     } = result;
 
     // mapping posTag and wordCounter
     const arrTextInput = [];
+    const arrSylableInput = [];
     posTag.forEach(element => {
       const numberExist = wordCounter[element[0]];
       const dataType = DATATYPE[element[1]];
       const ranking = wordRanking[element[0].toLowerCase()];
-      console.log('word----',element[0], ', ranking-----', ranking);
-      console.log('word---', )
+      // console.log('word----',element[0], ', ranking-----', ranking);
+      // console.log('word---', )
+      if (dataType.type !== 'Dấu câu') {
+        const sylableArr = element[0].split(' ');
+        console.log("handleData -> sylableArr", sylableArr);
+        sylableArr.forEach(sylable => {
+          sylable = sylable.toLowerCase();
+          const objSylable = {
+            text: sylable,
+            numberExist: syllableCounter[sylable],
+            ranking: SyllableRanking[sylable]
+          };
+          arrSylableInput.push(objSylable);
+        })
+        
+
+      }
       const obj = {
         text: element[0],
         dataType,
@@ -207,6 +223,7 @@ function handleData(directInput, res, checkBy) {
       }
       arrTextInput.push(obj);
     });
+    console.log('arrSylableInput---', arrSylableInput);
     // convert float numbet to 3 number after .
     for (const key in result) {
       if (typeof result[key] === 'number') {
@@ -218,6 +235,7 @@ function handleData(directInput, res, checkBy) {
     res.render('index', {
       ischecked: true,
       arrTextInput,
+      arrSylableInput,
       checkBy,
       dataResponse: result,
       readabilityLevel: ReadabilityTextLevel[level]
@@ -263,5 +281,109 @@ router.post('/checkByFile', upload.single('fileData'), (req, res) => {
     console.log('error---', error);
     res.send(400);
   }
+});
+router.get('/show-ranking-sylable', function(req, res, next) {
+  const currentRanking = req.query.ranking ? parseInt(req.query.ranking) : 1;
+  console.log('currentRanking---', currentRanking);
+  var data = fs.readFileSync('TanSoTieng.txt', 'utf8');
+  var listWord = data.toString().split('\n');
+  listWord= listWord.map((word, index) => {
+    let ranking = parseInt(index / 600) + 1;
+    return {text: word.split('\t')[0], ranking}
+  });
+  console.log('length-----', listWord.length);
+  console.log('ranking-max', listWord[listWord.length - 1]);
+  let listRanking = new Array(listWord[listWord.length - 1].ranking).fill(Object.assign({}, {}));
+  listRanking = listRanking.map((elem,index) => {
+    console.log('index----', index);
+    elem = index + 1;
+    return elem;
+  });
+  console.log("listRanking", listRanking)
+  listWord = listWord.slice((currentRanking-1)*600,currentRanking*600);
+  console.log('data-----', data.toString().split('\n')[1].split('\t'));
+  res.render('showRanking', {
+    listWord,
+    listRanking,
+    title: 'âm tiết'
+  });
+});
+router.get('/show-ranking-word', function(req, res, next) {
+  const currentRanking = req.query.ranking ? parseInt(req.query.ranking) : 1;
+  console.log('currentRanking---', currentRanking);
+  var data = fs.readFileSync('TanSoTu.txt', 'utf8');
+  var listWord = data.toString().split('\n');
+  listWord= listWord.map((word, index) => {
+    let ranking = parseInt(index / 600) + 1;
+    return {text: word.split('\t')[0], ranking}
+  });
+  console.log('length-----', listWord.length);
+  console.log('ranking-max', listWord[listWord.length - 1]);
+  let listRanking = new Array(listWord[listWord.length - 1].ranking).fill(Object.assign({}, {}));
+  listRanking = listRanking.map((elem,index) => {
+    console.log('index----', index);
+    elem = index + 1;
+    return elem;
+  });
+  console.log("listRanking", listRanking)
+  listWord = listWord.slice((currentRanking-1)*600,currentRanking*600);
+  console.log('data-----', data.toString().split('\n')[1].split('\t'));
+  res.render('showRanking', {
+    listWord,
+    listRanking,
+    title: 'từ'
+  });
+});
+router.get('/han-viet', function(req, res, next) {
+  var data = fs.readFileSync('han_viet.txt', 'utf8');
+  var listWord = data.toString().split('\n');
+  listWord= listWord.map(word => {
+    return {text: word.split('\r')[0]}
+  });
+  console.log('length-----', listWord);
+  console.log('data-----', data.toString().split('\n')[1].split('\t'));
+  res.render('showListWord', {
+    listWord,
+    title: 'Danh sách các từ Hán - Việt'
+  });
+});
+router.get('/phuong-ngu', function(req, res, next) {
+  var data = fs.readFileSync('phuong_ngu.txt', 'utf8');
+  var listWord = data.toString().split('\n');
+  listWord= listWord.map(word => {
+    return {text: word.split('\r')[0]}
+  });
+  console.log('length-----', listWord);
+  console.log('data-----', data.toString().split('\n')[1].split('\t'));
+  res.render('showListWord', {
+    listWord,
+    title: 'Danh sách các phương ngữ tiếng Việt'
+  });
+});
+router.get('/am-tiet-thong-dung', function(req, res, next) {
+  var data = fs.readFileSync('3000_most_syllable.txt', 'utf8');
+  var listWord = data.toString().split('\n');
+  listWord= listWord.map(word => {
+    return {text: word.split('\r')[0]}
+  });
+  console.log('length-----', listWord);
+  console.log('data-----', data.toString().split('\n')[1].split('\t'));
+  res.render('showListWord', {
+    listWord,
+    title: 'Danh sách 3000 âm tiết thông dụng trong tiếng Việt'
+  });
+});
+router.get('/tu-thong-dung', function(req, res, next) {
+  var data = fs.readFileSync('3000_most_word.txt', 'utf8');
+  var listWord = data.toString().split('\n');
+  listWord= listWord.map(word => {
+    return {text: word.split('\r')[0]}
+  });
+  console.log('length-----', listWord);
+  console.log('data-----', data.toString().split('\n')[1].split('\t'));
+  res.render('showListWord', {
+    listWord,
+    title: 'Danh sách 3000 từ thông dụng trong tiếng Việt'
+  });
 });
 module.exports = router;

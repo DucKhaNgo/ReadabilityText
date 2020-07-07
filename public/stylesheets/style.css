@@ -22,7 +22,7 @@
 }
 .tooltip .tooltiptext {
   visibility: hidden;
-  width: max-content;
+  /* width: max-content; */
   background-color: #746e6e;
   color: white;
   text-align: center;
@@ -34,8 +34,13 @@
   height: 30px;
   padding: 0px 10px;
   top: -20px;
+  left: 100%;
+  /* display: flex; */
+  white-space: nowrap;
 }
-
+.tooltip .tooltiptext span {
+  display: inline-block;
+}
 .tooltip:hover .tooltiptext {
   visibility: visible;
 }
@@ -53,6 +58,7 @@
   /* cursor: pointer; */
   border-radius: 38px;
   width: 12vw;
+  outline: none;
 }
 
 .dropbtn:hover, .dropbtn:focus {
@@ -72,7 +78,8 @@
   overflow: auto;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
-  border-radius: 10px;
+  /* border-radius: 10px; */
+  padding: 0px 5px;
 }
 .dropdown-content .block {
   content: "";
@@ -102,12 +109,33 @@
 
 .filter {
   display: flex;
+  align-items: center;
 }
 
 .btnFilter {
   color: rgb(255, 255, 255);
-    background-color: rgb(255, 57, 69);
-    border-radius: 5px;
-    width: 8vw;
-    font-size: 15px;
+  background-color: rgb(255, 57, 69);
+  border-radius: 5px;
+  width: 90px;
+  font-size: 15px;
+  height: 38px;
+}
+.inputBtn {
+  height: 28px;
+    width: 65px;
+    border: 1px solid;
+    outline: none;
+    background: white !important;
+}
+
+.ranking-table {
+  display: table;
+}
+.define {
+  font-size: 17px;
+  color: white;
+  margin: 20px 0px;
+}
+.define .item {
+  margin: 30px 0px;
 }

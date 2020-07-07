@@ -1,0 +1,63 @@
+{{!-- {{>header user=this.user}} --}}
+<div>
+<h1 style="text-align: center;">Danh sách thứ hạng của {{title}} tiếng Việt</h1>
+<span style="margin-left: 35%;">Tìm kiếm:  </span>
+<input type="text" id="inputSearch" style="margin-right: 10px">
+<span>Chọn thứ hạng: </span>
+<select id="selectRanking">
+  {{#each listRanking}}
+   <option value="{{@this}}">{{@this}}</option>
+    {{/each}}
+</select>
+</div>
+<div style="margin: 0% 5%;">
+  <p>Danh sách các {{title}} ứng với thứ hạng hiện tại</p>
+  <p style="color: red;">*Những {{title}} không nằm trong danh sách ứng với thứ hạng 100</p>
+</div>
+{{!-- <button>Tìm kiếm</button> --}}
+<div class="table" style="margin: 0% 40%;">
+    <table>
+        <thead>
+        <tr>
+        <th>Từ</th>
+        <th>Thứ hạng</th>
+        </tr>
+        </thead>
+        <tbody id="listWordRanking">
+        {{#each listWord}}
+        <tr class="text">
+            <td>{{text}}</td>
+            <td>{{ranking}}</td>
+        </tr>
+        {{/each}}
+        </tbody>
+    </table>
+</div>
+<script>
+  $("#inputSearch").keyup(function() {
+    var value = $(this).val().toLowerCase();
+    var listText = $('.text').each(function() {
+      if ($(this).text().toLowerCase().indexOf(value) > -1) {
+        $(this).css('display', 'table-row');
+      } else {
+        $(this).css('display', 'none');
+      }
+    });
+  });
+  $('#selectRanking').change(function() {
+    var ranking = $(this).val();
+    console.log(ranking);
+  dataUrl = `?ranking=${ranking}`;
+    $.ajax({
+      url:dataUrl,
+      type: 'GET',
+      success: function(res) {
+        console.log('res---', res);
+       var listWordRanking =  $(res).find('#listWordRanking').html();
+       console.log("listWordRanking", listWordRanking);
+       $('#listWordRanking').html(listWordRanking);
+      }
+    });
+  });
+</script>
+{{!-- {{>footer}} --}}

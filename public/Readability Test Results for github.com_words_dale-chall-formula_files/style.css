@@ -2305,24 +2305,6 @@ a img {border:none;}
 .bg--light-gray-pattern ul li,
 article.main ul li { background:url(../img/bullet-light-gray.gif) no-repeat left 5px; }
 
-.white-section-wrapper input[type="text"],
-.white-section-wrapper input[type="search"],
-.white-section-wrapper input[type="url"],
-.white-section-wrapper input[type="password"],
-.white-section-wrapper input[type="email"],
-.white-section-wrapper textarea,
-.white-section-wrapper .input-attached input[type="text"],
-.white-section-wrapper .input-attached input[type="date"],
-.white-section-wrapper .input-attached input[type="datetime"],
-.white-section-wrapper .input-attached input[type="datetime-local"],
-.white-section-wrapper .input-attached input[type="email"],
-.white-section-wrapper .input-attached input[type="month"],
-.white-section-wrapper .input-attached input[type="number"],
-.white-section-wrapper .input-attached input[type="password"],
-.white-section-wrapper .input-attached input[type="search"],
-.white-section-wrapper .input-attached input[type="tel"],
-.white-section-wrapper .input-attached input[type="url"],
-.white-section-wrapper .input-attached input[type="week"] { border: 1px solid #ccc; }
 
 .arrow-bar {
 	position: relative;
@@ -3065,78 +3047,8 @@ a.cta.gray-box:active {background-color:#151515;}
 /*====== Forms ======*/
 .form-row {margin-bottom:10px;}
 
-select,
-textarea,
-input[type="text"],
-input[type="date"],
-input[type="datetime"],
-input[type="datetime-local"],
-input[type="email"],
-input[type="month"],
-input[type="number"],
-input[type="password"],
-input[type="search"],
-input[type="tel"],
-input[type="url"],
-input[type="week"] {
-	background:#fff;
-    font-family: 'robotoregular';
-	font-size:14px;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-}
 
-textarea,
-input[type="text"],
-input[type="date"],
-input[type="datetime"],
-input[type="datetime-local"],
-input[type="email"],
-input[type="month"],
-input[type="number"],
-input[type="password"],
-input[type="search"],
-input[type="tel"],
-input[type="url"],
-input[type="week"] {
-    border: 0;
-	-webkit-border-radius: 3px;
-	border-radius: 3px;
-	padding:10px;
-	color: #333;
-}
 
-input[type="text"]:focus,
-input[type="date"]:focus,
-input[type="datetime"]:focus,
-input[type="datetime-local"]:focus,
-input[type="email"]:focus,
-input[type="month"],
-input[type="number"]:focus,
-input[type="password"]:focus,
-input[type="search"]:focus,
-input[type="tel"]:focus,
-input[type="url"]:focus,
-input[type="week"]:focus,
-input[type="text"].input-highlighted,
-input[type="date"].input-highlighted,
-input[type="datetime"].input-highlighted,
-input[type="datetime-local"].input-highlighted,
-input[type="email"].input-highlighted,
-input[type="month"].input-highlighted,
-input[type="number"].input-highlighted,
-input[type="password"].input-highlighted,
-input[type="search"].input-highlighted,
-input[type="tel"].input-highlighted,
-input[type="url"].input-highlighted,
-input[type="week"].input-highlighted,
-textarea:focus,
-textarea.input-highlighted,
-select.input-highlighted {
-	-webkit-box-shadow: 0 0 10px 0 #ffd02b;
-	box-shadow: 0 0 10px 0 #ffd02b;
-}
 
 input[type="submit"],
 button {
@@ -3190,41 +3102,7 @@ fieldset a {color:#7492c8;}
 	padding:20px;
 }
 
-.big-form-fields.input-attached input[type="text"],
-.big-form-fields.input-attached input[type="date"],
-.big-form-fields.input-attached input[type="datetime"],
-.big-form-fields.input-attached input[type="datetime-local"],
-.big-form-fields.input-attached input[type="email"],
-.big-form-fields.input-attached input[type="month"],
-.big-form-fields.input-attached input[type="number"],
-.big-form-fields.input-attached input[type="password"],
-.big-form-fields.input-attached input[type="search"],
-.big-form-fields.input-attached input[type="tel"],
-.big-form-fields.input-attached input[type="url"],
-.big-form-fields.input-attached input[type="week"],
-.big-form-fields.input-attached input[type="submit"],
-.popup-form .big-form-fields.input-attached input[type="submit"] {
-	height:60px;
-}
 
-.input-attached input[type="text"],
-.input-attached input[type="date"],
-.input-attached input[type="datetime"],
-.input-attached input[type="datetime-local"],
-.input-attached input[type="email"],
-.input-attached input[type="month"],
-.input-attached input[type="number"],
-.input-attached input[type="password"],
-.input-attached input[type="search"],
-.input-attached input[type="tel"],
-.input-attached input[type="url"],
-.input-attached input[type="week"] {
-	border: 0;
-	-webkit-border-radius: 3px 0 0 3px;
-	border-radius: 3px 0 0 3px;
-	height: 40px;
-	padding: 12px;
-}
 
 .input-attached input[type="submit"],
 .popup-form .input-attached input[type="submit"] {
@@ -7755,23 +7633,6 @@ a.contact-phone-number {color:#2e4875}
 
     .application .form-row { margin-bottom: 20px; }
 
-    .application input[type="text"],
-    .application input[type="date"],
-    .application input[type="datetime"],
-    .application input[type="datetime-local"],
-    .application input[type="email"],
-    .application input[type="month"],
-    .application input[type="number"],
-    .application input[type="password"],
-    .application input[type="search"],
-    .application input[type="tel"],
-    .application input[type="url"],
-    .application input[type="week"],
-    .application textarea,
-    .application select {
-        border: 1px solid #ccc;
-        width: 100%;
-    }
 
     .application textarea { min-height: 100px; }
 

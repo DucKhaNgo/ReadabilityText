@@ -1,0 +1,9 @@
+công thức tiếng VIệt có 3 cấp.
+làm thống kê hồi quy để ra công thức 11 cấp
+tiền xử lý trích được các đặc trưng ->phân tích thống kê tương quan( vision correlation) xem đặc trưng nào tương quan nhất -> chọn đặc trưng -> thống kê hồi quy để ra được trọng số(excel)
+
+tiền xử lý đã có trên mạng(vnTokenizer)
+https://github.com/undertheseanlp/underthesea(tập trung vào phần 1 và 2)
+
+đưa hết tất cả các công thức cũ(2 ct của liem, 1 ct của thầy, và 1 ct của mình)
+đưa ra danh sách thông kê các từ phổ biến, có bao nhiêu số từ nằm trong danh sách 3000 từ phổ biến
