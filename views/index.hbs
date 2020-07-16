@@ -114,8 +114,9 @@
                                     <span style="padding-right: 1rem;"> Hiển thị tần suất xuất hiện</span>
                                     <input checked style="width: 20px; height: 20px" type="checkbox"
                                         id="displayRanking">
-                                    <span> Hiển thị <a id='hrefRanking' style="color: #6868a2;" target="_blank"
-                                            href="/show-ranking-word">thứ hạng</a></span>
+                                    <span> Hiển thị thứ hạng</span>
+                                            <div style="font-style: italic; color: #464545; font-size: 16px"><a href="/show-ranking-sylable" target="_blank">*Xem thứ hạng của từ thông dụng tiếng Việt</a></div>
+                                            <div style="font-style: italic; color: #464545; font-size: 16px"><a href="/show-ranking-word" target="_blank">*Xem thứ hạng của âm tiết thông dụng tiếng Việt</a></div>
                                     <div style="font-size: 15px; color: red">*Thứ hạng được sắp xếp theo thứ tự xuất
                                         hiện trong danh sách tần suất của từ, nếu từ không xuất hiện trong danh sách, mặc định thứ hạng của từ là 100</div>
                                 </div>
@@ -509,14 +510,12 @@ toggle between hiding and showing the dropdown content */
             $("#displayWordType").attr('disabled', true);
             $('#spandisplayWordType').css('color', '#a2a0a0');
             $('.dropdown').css('display', 'none');
-            $('#hrefRanking').attr('href', '/show-ranking-sylable');
         } else {
             $('.listSylable').css('display', 'none');
             $('.listWords').css('display', 'unset');
             $("#displayWordType").attr('disabled', false);
             $('#spandisplayWordType').css('color', '#666');
             $('.dropdown').css('display', 'unset');
-            $('#hrefRanking').attr('href', '/show-ranking-word');
         }
     })
     $('#displayWordType').click(function () {
