@@ -1,4 +1,4 @@
-{{!-- {{>header user=this.user}} --}}
+
 <section class="masthead masthead--readability clearfix">
     <section class="content-section center hard-bottom">
         <div class="container">
@@ -39,9 +39,6 @@
                                     <!--<label title="Paste a complete (HTML) Document here" for="directInput">Enter text to check the readability:</label><br />-->
                                     <textarea id="directInput" name="directInput" rows="10" cols="60"
                                         placeholder="Nhập văn bản để đánh giá độ khó:">{{text}}</textarea>
-
-                                    <p class="text--white italic smaller-copy"> HTML is allowed - it will be stripped
-                                        from the text. </p>
                                     <input type="submit" value="Đánh giá độ khó văn bản" class="btn blue push-top">
                                 </div>
                             </fieldset>
@@ -58,22 +55,6 @@
                     </div>
                     {{#if ischecked}}
                     <div class="bg--dkblue soft">
-                        {{!-- <div id="tabs-1" class="ui-state-active tab-content">
-
-                        <h1 class="text--white">Test by URL</h1>
-                        <p class="text--white small-copy">Test the readability of a web page:</p>
-                        <form method="get" action="/checkByUrl" class="main-form">
-                            <input type="hidden" class="js-selected-tab" name="tab" value="Test By Url">
-                            <fieldset>
-                                <div class="form-row">
-                                    <!--<label title="Address of page to Validate" for="uri">Web Address:</label>-->
-                                    <input type="text" name="uri" id="uri" size="45" value="http://">
-
-                                    <input type="submit" value="Calculate Readability" class="btn blue push-top">
-                                </div>
-                            </fieldset>
-                        </form>
-                    --}}
                         <div class="readability-results">
                             <div class="meanScore scale-d">
                                 {{#each arrTextInput}}
@@ -95,6 +76,16 @@
                                                 class="currentRank">{{ranking}}</span></span>
                                     </span> </div>
                                 {{/each}}
+                                {{!-- {{#each arrNertag}}
+                                     <div style="display: none;" class="listNertag tooltip"><span
+                                        class="wordText">{{text}}</span>
+                                    <span class="tooltiptext">
+                                        <span>{{type}}</span>
+                                    </span> </div>
+                                {{/each}} --}}
+                                <div style="display: none;" class="listNertag">
+                                    {{{fullText}}}
+                                </div>
                                 <p class="text--blue uppercase sans-serif--bold flush-bottom">Kết quả đánh giá:</p>
                                 <span></span>
                                 <p class="flush-top small-copy" style="font-size: 20px !important;">Tài liệu bạn vừa
@@ -103,9 +94,15 @@
                                     và độ tuổi thích hợp để đọc là <strong
                                         class="bold">{{readabilityLevel.age}}</strong></p>
                                 <div style="margin-bottom: 20px">
+                                    <div>
+                                    <input style="width: 20px; height: 20px" type="checkbox" id="displayNertag">
+                                    <span style="padding-right: 1rem" id="spandisplayNertag">Hiển thị tách thực thể</span>
                                     <input style="width: 20px; height: 20px" type="checkbox" id="displaySylable">
-                                    <span style="padding-right: 1rem;"> Hiển thị tách <a style="color: #6868a2;"
+                                    <span style="padding-right: 1rem;" id="spandisplaySylable"> Hiển thị tách <a style="color: #6868a2;"
                                             target="_blank" href="/show-ranking-sylable"> âm tiết</a></span>
+                                    </div>
+                                    <div id="showAttribute">
+
                                     <input checked style="width: 20px; height: 20px" type="checkbox"
                                         id="displayWordType">
                                     <span id="spandisplayWordType" style="padding-right: 1rem;"> Hiển thị từ loại</span>
@@ -115,6 +112,8 @@
                                     <input checked style="width: 20px; height: 20px" type="checkbox"
                                         id="displayRanking">
                                     <span> Hiển thị thứ hạng</span>
+
+                                    </div>
                                             <div style="font-style: italic; color: #464545; font-size: 16px"><a href="/show-ranking-sylable" target="_blank">*Xem thứ hạng của từ thông dụng tiếng Việt</a></div>
                                             <div style="font-style: italic; color: #464545; font-size: 16px"><a href="/show-ranking-word" target="_blank">*Xem thứ hạng của âm tiết thông dụng tiếng Việt</a></div>
                                     <div style="font-size: 15px; color: red">*Thứ hạng được sắp xếp theo thứ tự xuất
@@ -158,44 +157,44 @@
                                     <tbody>
                                         <tr>
                                             <th>Số lượng câu</th>
-                                            <td>{{dataResponse.number_of_sentence}}</td>
+                                            <td>{{Shallow.number_of_sentence}}</td>
                                             <td class="indicator"></td>
                                         </tr>
                                         <tr>
                                             <th>Số từ</th>
-                                            <td>{{dataResponse.number_of_word}}</td>
+                                            <td>{{Shallow.number_of_word}}</td>
                                             <td></td>
                                         </tr>
 
                                         <tr>
                                             <th>Số từ riêng biệt</th>
-                                            <td>{{dataResponse.number_of_distinct_word}}</td>
+                                            <td>{{Shallow.number_of_distinct_word}}</td>
                                             <td></td>
                                         </tr>
 
                                         <tr>
                                             <th>Số âm tiết</th>
-                                            <td>{{dataResponse.number_of_syllable}}</td>
+                                            <td>{{Shallow.number_of_syllable}}</td>
                                             <td></td>
                                         </tr>
                                         <tr>
                                             <th>Số âm tiết riêng biệt</th>
-                                            <td>{{dataResponse.number_of_distinct_syllable}}</td>
+                                            <td>{{Shallow.number_of_distinct_syllable}}</td>
                                             <td></td>
                                         </tr>
                                         <tr>
                                             <th>Số kí tự</th>
-                                            <td>{{dataResponse.number_of_character}}</td>
+                                            <td>{{Shallow.number_of_character}}</td>
                                             <td></td>
                                         </tr>
                                         <tr>
                                             <th>Số danh từ riêng</th>
-                                            <td>{{dataResponse.number_of_proper_noun}}</td>
+                                            <td>{{Pos.number_of_proper_noun}}</td>
                                             <td></td>
                                         </tr>
                                         <tr>
                                             <th>Số danh từ riêng riêng biệt</th>
-                                            <td>{{dataResponse.number_of_distinct_proper_noun}}</td>
+                                            <td>{{Pos.number_of_distinct_proper_noun}}</td>
                                             <td></td>
                                         </tr>
                                     </tbody>
@@ -211,7 +210,7 @@
                                                     tại <a style="color: #6868a2;" href="#sentenselength"> đây</a></div>
 
                                             </th>
-                                            <td class="indices">{{dataResponse.aslw}}</td>
+                                            <td class="indices">{{Shallow.aslw}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span class="scale-c"></span></div>
                                             </td>
@@ -221,7 +220,7 @@
                                                 <div style="font-size: 15px; color: #cacaca">Xem định nghĩa và cách tính
                                                     tại <a style="color: #6868a2;" href="#sylablelength"> đây</a></div>
                                             </th>
-                                            <td class="indices">{{dataResponse.asls}}</td>
+                                            <td class="indices">{{Shallow.asls}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span class="scale-d"></span></div>
                                             </td>
@@ -232,7 +231,7 @@
                                                     tại <a style="color: #6868a2;" href="#characterlength"> đây</a>
                                                 </div>
                                             </th>
-                                            <td class="indices">{{dataResponse.aslc}}</td>
+                                            <td class="indices">{{Shallow.aslc}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span class="scale-d"></span></div>
                                             </td>
@@ -243,7 +242,7 @@
                                                     tại <a style="color: #6868a2;" href="#wordsylablelength"> đây</a>
                                                 </div>
                                             </th>
-                                            <td class="indices">{{dataResponse.awls}}</td>
+                                            <td class="indices">{{Shallow.awls}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span class="scale-d"></span></div>
                                             </td>
@@ -254,7 +253,7 @@
                                                     tại <a style="color: #6868a2;" href="#characterwordlength"> đây</a>
                                                 </div>
                                             </th>
-                                            <td class="indices">{{dataResponse.awlc}}</td>
+                                            <td class="indices">{{Shallow.awlc}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span class="scale-c"></span></div>
                                             </td>
@@ -265,7 +264,7 @@
                                                 <div style="font-size: 15px; color: #cacaca">Xem định nghĩa và cách tính
                                                     tại <a style="color: #6868a2;" href="#defineSylable"> đây</a></div>
                                             </th>
-                                            <td class="indices percent">{{dataResponse.pds}}</td>
+                                            <td class="indices percent">{{Shallow.pds}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span></span></div>
                                             </td>
@@ -277,7 +276,7 @@
                                                     tại <a style="color: #6868a2;" href="#defineWord"> đây</a></div>
 
                                             </th>
-                                            <td class="indices percent">{{dataResponse.pdw}}</td>
+                                            <td class="indices percent">{{Shallow.pdw}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span></span></div>
                                             </td>
@@ -288,7 +287,7 @@
                                                 <div style="font-size: 15px; color: #cacaca">Xem định nghĩa và cách tính
                                                     tại <a style="color: #6868a2;" href="#hanviet"> đây</a></div>
                                             </th>
-                                            <td class="indices percent">{{dataResponse.psvw}}</td>
+                                            <td class="indices percent">{{Pos.psvw}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span></span></div>
                                             </td>
@@ -300,7 +299,7 @@
                                                     tại <a style="color: #6868a2;" href="#phuongngu"> đây</a></div>
 
                                             </th>
-                                            <td class="indices percent">{{dataResponse.pdiadw}}</td>
+                                            <td class="indices percent">{{Pos.pdiadw}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span></span></div>
                                             </td>
@@ -311,7 +310,7 @@
                                                     tại <a style="color: #6868a2;" href="#defineLAVFormula"> đây</a>
                                                 </div>
                                             </th>
-                                            <td class="indices">{{dataResponse.LAVFomula}}</td>
+                                            <td class="indices">{{formula.LAVFomula}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span class="scale-e"></span></div>
                                             </td>
@@ -322,7 +321,7 @@
                                                     tại <a style="color: #6868a2;" href="#defineLTNFormula1982"> đây</a>
                                                 </div>
                                             </th>
-                                            <td class="indices">{{dataResponse.NH1982}}</td>
+                                            <td class="indices">{{formula.NH1982}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span class="scale-e"></span></div>
                                             </td>
@@ -333,7 +332,7 @@
                                                     tại <a style="color: #6868a2;" href="#defineLTNFormula1985"> đây</a>
                                                 </div>
                                             </th>
-                                            <td class="indices">{{dataResponse.NH1985}}</td>
+                                            <td class="indices">{{formula.NH1985}}</td>
                                             <td class="indicator">
                                                 <div class="scale"><span class="scale-e"></span></div>
                                             </td>
@@ -508,13 +507,41 @@ toggle between hiding and showing the dropdown content */
             $('.listSylable').css('display', 'unset');
             $('.listWords').css('display', 'none');
             $("#displayWordType").attr('disabled', true);
+            $("#displayNertag").attr('disabled', true);
+            $('#spandisplayNertag').css('color', '#a2a0a0');
             $('#spandisplayWordType').css('color', '#a2a0a0');
             $('.dropdown').css('display', 'none');
         } else {
             $('.listSylable').css('display', 'none');
             $('.listWords').css('display', 'unset');
             $("#displayWordType").attr('disabled', false);
+            $('#displayNertag').attr('disabled', false);
+            $('#spandisplayNertag').css('color', '#666');
             $('#spandisplayWordType').css('color', '#666');
+            $('.dropdown').css('display', 'unset');
+        }
+    });
+    $('#displayNertag').click(function() {
+        if ($('#displayNertag').is(':checked')) {
+            $('.listNertag').css('display', 'unset');
+            $('.listSylable').css('display', 'none');
+            $('.listWords').css('display', 'none');
+            $('#displaySylable').attr('disabled', true);
+            $('#displayWordType').attr('disabled', true);
+            $('#displayFrequency').attr('disabled', true);
+            $('#displayRanking').attr('disabled', true);
+            $('#showAttribute').css('color', '#a2a0a0');
+            $('#spandisplaySylable').css('color', '#a2a0a0');
+            $('.dropdown').css('display', 'none');
+        } else {
+            $('.listWords').css('display', 'unset');
+            $('.listNertag').css('display', 'none');
+            $('#displaySylable').attr('disabled', false);
+            $('#displayWordType').attr('disabled', false);
+            $('#displayFrequency').attr('disabled', false);
+            $('#displayRanking').attr('disabled', false);
+            $('#showAttribute').css('color', '#666');
+            $('#spandisplaySylable').css('color', '#666');
             $('.dropdown').css('display', 'unset');
         }
     })
@@ -569,12 +596,6 @@ toggle between hiding and showing the dropdown content */
             text = (parseFloat(text) * 100).toFixed(2) + '%';
             $(this).text(text);
         });
-        //   for (let i = 0; i< arrpercent.length; i++) {
-        //       console.log('arrpercent---', arrpercent[i]);
-        // let text = arrpercent[i].text();
-        //   text = parseFloat(text)*100 + '%';
-        //   console.log('text ne---', text);
-        //  }
     }
     converpercent();
     let listrange = [{
@@ -613,8 +634,6 @@ toggle between hiding and showing the dropdown content */
     let filter = false;
 
     function filterRanking() {
-        console.log('min---', $('#min-rank').val());
-        console.log('max---', $('#max-rank').val());
         const min = parseInt($('#min-rank').val());
         const max = parseInt($('#max-rank').val());
         if (min < 1 || min > 100 || max < 1 || max > 100 || !min || !max) {

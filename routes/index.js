@@ -8,6 +8,7 @@ var fs = require('fs');
 var fileName = '';
 const PATH = "./uploads";
 
+const FILEDATAPATH = 'FileData/';
 const DATATYPE = {
   A: {
     type: 'Tính từ',
@@ -138,6 +139,14 @@ const DATATYPE = {
     class: ''
   }
 };
+const HOST = 'http://localhost:8000/text_analysis/';
+const EDFEATURES = {
+  PER: 'Tên người',
+  LOC: 'Tên địa chỉ',
+  ORG: 'Tên tổ chức',
+  MISC: 'Tên thực thể khác'
+};
+
 const ReadabilityTextLevel = ['', {
   ability: 'từ lớp 2 tới lớp 5',
   age: 'từ 7 tới 10 tuổi'
@@ -165,33 +174,40 @@ var upload = multer({
 /* GET home page. */
 router.get('/', function (req, res, next) {
   res.render('index');
-  // res.send('sadasdsadd');
 });
-
+function convertFloat(object) {
+  for (const key in object) {
+    if (typeof object[key] === 'number') {
+      object[key] = Math.round(object[key] * 1000) / 1000;
+    }
+  }
+  return object;
+}
 function handleData(directInput, res, checkBy) {
-  console.log(encodeURIComponent(directInput));
   axios({
     method: 'post',
-    url: 'http://localhost:8000/text_analysis/',
+    url: HOST,
     data: 'input_text=' + encodeURIComponent(directInput),
     headers: {
-      // 'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
       'accept': '*'
     }
   }).then(result => {
     result = result.data;
     const {
-      posTag,
-      wordCounter,
-      wordRanking,
-      SyllableRanking,
-      syllableCounter
+      data: {
+        Shallow,
+        Pos,
+      },
+      wordPair: { postag, wordCounter, wordRanking, SyllableRanking, syllableCounter, nertag },
+      formula
     } = result;
-
     // mapping posTag and wordCounter
     const arrTextInput = [];
     const arrSylableInput = [];
-    posTag.forEach(element => {
+    const arrNertag = [];
+    let fullText = '';
+    postag.forEach(element => {
       const numberExist = wordCounter[element[0]];
       const dataType = DATATYPE[element[1]];
       const ranking = wordRanking[element[0].toLowerCase()];
@@ -206,31 +222,45 @@ function handleData(directInput, res, checkBy) {
           };
           arrSylableInput.push(objSylable);
         })
-        
-
       }
       const obj = {
         text: element[0],
         dataType,
         numberExist,
         ranking
-      }
+      };
+      fullText = fullText.concat(element[0], ' ');
       arrTextInput.push(obj);
     });
-    // convert float numbet to 3 number after .
-    for (const key in result) {
-      if (typeof result[key] === 'number') {
-        result[key] = Math.round(result[key] * 1000) / 1000;
+    nertag.forEach(element => {
+      const text = element[0];
+      const type = EDFEATURES[element[1]];
+      const obj = {
+        text,
+        type
       }
-    }
+      arrNertag.push(obj);
+    })
+    arrNertag.forEach(ner => {
+        fullText = fullText.replace(new RegExp(ner.text, 'g'), `<div class='tooltip' style="text-decoration: underline; text-decoration-color: blue"> <span>${ner.text}</span> <span class="tooltiptext">
+        <span>${ner.type}</span>
+    </span> </div>`);
+    })
+    // convert float numbet to 3 number after .
+    convertFloat(Shallow);
+    convertFloat(Pos);
+    convertFloat(formula);
     const level = result.readabiity;
-
     res.render('index', {
+      Shallow,
+      Pos,
+      formula,
+      arrNertag,
+      fullText,
       ischecked: true,
       arrTextInput,
       arrSylableInput,
       checkBy,
-      dataResponse: result,
       readabilityLevel: ReadabilityTextLevel[level]
     });
   }).catch(error => {
@@ -274,7 +304,7 @@ router.post('/checkByFile', upload.single('fileData'), (req, res) => {
 });
 router.get('/show-ranking-sylable', function(req, res, next) {
   const currentRanking = req.query.ranking ? parseInt(req.query.ranking) : 1;
-  var data = fs.readFileSync('TanSoTieng.txt', 'utf8');
+  var data = fs.readFileSync(`${FILEDATAPATH}TanSoTieng.txt`, 'utf8');
   var listWord = data.toString().split('\n');
   listWord= listWord.map((word, index) => {
     let ranking = parseInt(index / 600) + 1;
@@ -294,7 +324,7 @@ router.get('/show-ranking-sylable', function(req, res, next) {
 });
 router.get('/show-ranking-word', function(req, res, next) {
   const currentRanking = req.query.ranking ? parseInt(req.query.ranking) : 1;
-  var data = fs.readFileSync('TanSoTu.txt', 'utf8');
+  var data = fs.readFileSync(`${FILEDATAPATH}TanSoTu.txt`, 'utf8');
   var listWord = data.toString().split('\n');
   listWord= listWord.map((word, index) => {
     let ranking = parseInt(index / 600) + 1;
@@ -313,7 +343,7 @@ router.get('/show-ranking-word', function(req, res, next) {
   });
 });
 router.get('/han-viet', function(req, res, next) {
-  var data = fs.readFileSync('han_viet.txt', 'utf8');
+  var data = fs.readFileSync(`${FILEDATAPATH}han_viet.txt`, 'utf8');
   var listWord = data.toString().split('\n');
   listWord= listWord.map(word => {
     return {text: word.split('\r')[0]}
@@ -324,7 +354,7 @@ router.get('/han-viet', function(req, res, next) {
   });
 });
 router.get('/phuong-ngu', function(req, res, next) {
-  var data = fs.readFileSync('phuong_ngu.txt', 'utf8');
+  var data = fs.readFileSync(`${FILEDATAPATH}phuong_ngu.txt`, 'utf8');
   var listWord = data.toString().split('\n');
   listWord= listWord.map(word => {
     return {text: word.split('\r')[0]}
@@ -335,7 +365,7 @@ router.get('/phuong-ngu', function(req, res, next) {
   });
 });
 router.get('/am-tiet-thong-dung', function(req, res, next) {
-  var data = fs.readFileSync('3000_most_syllable.txt', 'utf8');
+  var data = fs.readFileSync(`${FILEDATAPATH}3000_most_syllable.txt`, 'utf8');
   var listWord = data.toString().split('\n');
   listWord= listWord.map(word => {
     return {text: word.split('\r')[0]}
@@ -346,7 +376,7 @@ router.get('/am-tiet-thong-dung', function(req, res, next) {
   });
 });
 router.get('/tu-thong-dung', function(req, res, next) {
-  var data = fs.readFileSync('3000_most_word.txt', 'utf8');
+  var data = fs.readFileSync(`${FILEDATAPATH}3000_most_word.txt`, 'utf8');
   var listWord = data.toString().split('\n');
   listWord= listWord.map(word => {
     return {text: word.split('\r')[0]}
