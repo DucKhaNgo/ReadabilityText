@@ -146,13 +146,21 @@ const EDFEATURES = {
   ORG: 'Tên tổ chức',
   MISC: 'Tên thực thể khác'
 };
-
+const PARSETAG = {
+  AP: 'Cụm tính từ',
+  IP: 'Cụm thán từ',
+  NP: 'Cụm danh từ',
+  PP: 'Cụm giới từ',
+  QP: 'Cụm từ chỉ số lượng',
+  RP: 'Cụm phụ từ',
+  VP: 'Cụm động từ'
+}
 const ReadabilityTextLevel = ['', {
   ability: 'từ lớp 2 tới lớp 5',
   age: 'từ 7 tới 10 tuổi'
 }, {
   ability: 'từ lớp 6 tới lớp 9',
-  age: 'từ 11 tới 14 tuổi'
+  age: 'từ 11 tới 15 tuổi'
 }, {
   ability: 'từ lớp 10 trở lên',
   age: 'từ 16 tuổi trở lên'
@@ -179,6 +187,8 @@ function convertFloat(object) {
   for (const key in object) {
     if (typeof object[key] === 'number') {
       object[key] = Math.round(object[key] * 1000) / 1000;
+    } else if (typeof object[key] === 'object') {
+      convertFloat(object[key]);
     }
   }
   return object;
@@ -194,10 +204,13 @@ function handleData(directInput, res, checkBy) {
     }
   }).then(result => {
     result = result.data;
+    // convert float numbet to 3 number after .
+    convertFloat(result);
     const {
       data: {
         Shallow,
         Pos,
+        Ner
       },
       wordPair: { postag, wordCounter, wordRanking, SyllableRanking, syllableCounter, nertag },
       formula
@@ -206,6 +219,7 @@ function handleData(directInput, res, checkBy) {
     const arrTextInput = [];
     const arrSylableInput = [];
     const arrNertag = [];
+    const arrParsetag = [];
     let fullText = '';
     postag.forEach(element => {
       const numberExist = wordCounter[element[0]];
@@ -240,20 +254,17 @@ function handleData(directInput, res, checkBy) {
         type
       }
       arrNertag.push(obj);
-    })
+    });
     arrNertag.forEach(ner => {
         fullText = fullText.replace(new RegExp(ner.text, 'g'), `<div class='tooltip' style="text-decoration: underline; text-decoration-color: blue"> <span>${ner.text}</span> <span class="tooltiptext">
         <span>${ner.type}</span>
     </span> </div>`);
-    })
-    // convert float numbet to 3 number after .
-    convertFloat(Shallow);
-    convertFloat(Pos);
-    convertFloat(formula);
+    });
     const level = result.readabiity;
     res.render('index', {
       Shallow,
       Pos,
+      Ner,
       formula,
       arrNertag,
       fullText,
@@ -285,7 +296,7 @@ router.post('/checkByDirect', function (req, res, next) {
     }
   } catch (error) {
     console.log('error---', error);
-    res.send(400);
+    res.redirect('/');
   }
 });
 router.post('/checkByFile', upload.single('fileData'), (req, res) => {
@@ -299,7 +310,7 @@ router.post('/checkByFile', upload.single('fileData'), (req, res) => {
     });
   } catch (err) {
     console.log('error---', error);
-    res.send(400);
+    res.redirect('/');
   }
 });
 router.get('/show-ranking-sylable', function(req, res, next) {

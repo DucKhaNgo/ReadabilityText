@@ -1,4 +1,3 @@
-
 <section class="masthead masthead--readability clearfix">
     <section class="content-section center hard-bottom">
         <div class="container">
@@ -39,7 +38,8 @@
                                     <!--<label title="Paste a complete (HTML) Document here" for="directInput">Enter text to check the readability:</label><br />-->
                                     <textarea id="directInput" name="directInput" rows="10" cols="60"
                                         placeholder="Nhập văn bản để đánh giá độ khó:">{{text}}</textarea>
-                                    <input type="submit" value="Đánh giá độ khó văn bản" class="btn blue push-top">
+                                    <input type="submit" disabled id="btnSubmitDirect" value="Đánh giá độ khó văn bản"
+                                        class="btn blue push-top">
                                 </div>
                             </fieldset>
                         </form>
@@ -47,8 +47,9 @@
 
                     <div id="tabs-3" class="tab-content">
                         <h1>Đánh giá theo file word</h1>
-                        <form method="POST" action="/checkByFile" enctype="multipart/form-data">
-                            <input type="file" name="fileData" style=" background: white; ">
+                        <form style="display: flex;" method="POST" onsubmit="return Validate(this);" action="/checkByFile" enctype="multipart/form-data">
+                            <input type="file" id="file-1" class="inputfile" name="fileData">
+                            <label class="btn blue push-top" style="margin-right: 1rem;" for="file-1"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg><span id="spanFile" style="color: unset;">&nbsp;Chọn một file</span></label>
                             <input type="submit" value="Đánh giá độ khó văn bản" class="btn blue push-top">
                         </form>
 
@@ -76,6 +77,19 @@
                                                 class="currentRank">{{ranking}}</span></span>
                                     </span> </div>
                                 {{/each}}
+                                {{#each arrParsetag}}
+                                <div style="display: none;" class="listParseTag {{#if isDisplay}} tooltip {{/if}}"
+                                    {{#if isDisplay}} style="text-decoration: underline; text-decoration-color: blue"
+                                    {{/if}}><span class="wordText">{{text}}</span>
+                                    {{#if isDisplay}}
+                                    <span class="tooltiptext">
+                                        <span>{{type}}</span>
+                                    </span>
+
+                                    {{/if}}
+                                </div>
+
+                                {{/each}}
                                 {{!-- {{#each arrNertag}}
                                      <div style="display: none;" class="listNertag tooltip"><span
                                         class="wordText">{{text}}</span>
@@ -95,29 +109,36 @@
                                         class="bold">{{readabilityLevel.age}}</strong></p>
                                 <div style="margin-bottom: 20px">
                                     <div>
-                                    <input style="width: 20px; height: 20px" type="checkbox" id="displayNertag">
-                                    <span style="padding-right: 1rem" id="spandisplayNertag">Hiển thị tách thực thể</span>
-                                    <input style="width: 20px; height: 20px" type="checkbox" id="displaySylable">
-                                    <span style="padding-right: 1rem;" id="spandisplaySylable"> Hiển thị tách <a style="color: #6868a2;"
-                                            target="_blank" href="/show-ranking-sylable"> âm tiết</a></span>
+                                        <input disabled style="width: 20px; height: 20px" type="checkbox" id="displayNertag">
+                                        <span style="padding-right: 1rem; color: #a2a0a0" id="spandisplayNertag">Hiển thị tách thực
+                                            thể</span>
+                                        <input style="width: 20px; height: 20px" checked type="checkbox" id="displaySylable">
+                                        <span style="padding-right: 1rem;" id="spandisplaySylable"> Hiển thị tách <a
+                                                style="color: #6868a2;" target="_blank" href="/show-ranking-word"> từ loại</a></span>
                                     </div>
                                     <div id="showAttribute">
 
-                                    <input checked style="width: 20px; height: 20px" type="checkbox"
-                                        id="displayWordType">
-                                    <span id="spandisplayWordType" style="padding-right: 1rem;"> Hiển thị từ loại</span>
-                                    <input checked style="width: 20px; height: 20px" type="checkbox"
-                                        id="displayFrequency">
-                                    <span style="padding-right: 1rem;"> Hiển thị tần suất xuất hiện</span>
-                                    <input checked style="width: 20px; height: 20px" type="checkbox"
-                                        id="displayRanking">
-                                    <span> Hiển thị thứ hạng</span>
+                                        <input checked style="width: 20px; height: 20px" type="checkbox"
+                                            id="displayWordType">
+                                        <span id="spandisplayWordType" style="padding-right: 1rem;"> Hiển thị từ
+                                            loại</span>
+                                        <input checked style="width: 20px; height: 20px" type="checkbox"
+                                            id="displayFrequency">
+                                        <span style="padding-right: 1rem;"> Hiển thị tần suất xuất hiện</span>
+                                        <input checked style="width: 20px; height: 20px" type="checkbox"
+                                            id="displayRanking">
+                                        <span> Hiển thị thứ hạng</span>
 
                                     </div>
-                                            <div style="font-style: italic; color: #464545; font-size: 16px"><a href="/show-ranking-sylable" target="_blank">*Xem thứ hạng của từ thông dụng tiếng Việt</a></div>
-                                            <div style="font-style: italic; color: #464545; font-size: 16px"><a href="/show-ranking-word" target="_blank">*Xem thứ hạng của âm tiết thông dụng tiếng Việt</a></div>
+                                    <div style="font-style: italic; color: #464545; font-size: 16px"><a
+                                            href="/show-ranking-word" target="_blank">*Xem thứ hạng của từ thông dụng
+                                            tiếng Việt</a></div>
+                                    <div style="font-style: italic; color: #464545; font-size: 16px"><a
+                                            href="/show-ranking-sylable" target="_blank">*Xem thứ hạng của âm tiết thông
+                                            dụng tiếng Việt</a></div>
                                     <div style="font-size: 15px; color: red">*Thứ hạng được sắp xếp theo thứ tự xuất
-                                        hiện trong danh sách tần suất của từ, nếu từ không xuất hiện trong danh sách, mặc định thứ hạng của từ là 100</div>
+                                        hiện trong danh sách tần suất của từ, nếu từ không xuất hiện trong danh sách,
+                                        mặc định thứ hạng của từ là 100</div>
                                 </div>
                                 <div class="dropdown">
                                     <button id="btnShowFilter" onclick="myFunction()" class="dropbtn">Bộ lọc</button>
@@ -201,7 +222,8 @@
                                 </table>
                             </div>
                             <div class="results listpercent">
-                                <p class="text--blue uppercase sans-serif--bold flush-bottom">Chỉ số đọc hiểu</p>
+                                <p class="text--blue uppercase sans-serif--bold flush-bottom">Thông số thuộc tính bề mặt
+                                </p>
                                 <table>
                                     <tbody>
                                         <tr>
@@ -212,7 +234,6 @@
                                             </th>
                                             <td class="indices">{{Shallow.aslw}}</td>
                                             <td class="indicator">
-                                                <div class="scale"><span class="scale-c"></span></div>
                                             </td>
                                         </tr>
                                         <tr>
@@ -222,7 +243,6 @@
                                             </th>
                                             <td class="indices">{{Shallow.asls}}</td>
                                             <td class="indicator">
-                                                <div class="scale"><span class="scale-d"></span></div>
                                             </td>
                                         </tr>
                                         <tr>
@@ -233,29 +253,26 @@
                                             </th>
                                             <td class="indices">{{Shallow.aslc}}</td>
                                             <td class="indicator">
-                                                <div class="scale"><span class="scale-d"></span></div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>Độ dài trung bình từ tính theo âm tiết
-                                                   <div style="font-size: 15px; color: #cacaca">Xem định nghĩa và cách tính
+                                                <div style="font-size: 15px; color: #cacaca">Xem định nghĩa và cách tính
                                                     tại <a style="color: #6868a2;" href="#wordsylablelength"> đây</a>
                                                 </div>
                                             </th>
                                             <td class="indices">{{Shallow.awls}}</td>
                                             <td class="indicator">
-                                                <div class="scale"><span class="scale-d"></span></div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>Độ dài trung bình từ tính theo kí tự
-                                                 <div style="font-size: 15px; color: #cacaca">Xem định nghĩa và cách tính
+                                                <div style="font-size: 15px; color: #cacaca">Xem định nghĩa và cách tính
                                                     tại <a style="color: #6868a2;" href="#characterwordlength"> đây</a>
                                                 </div>
                                             </th>
                                             <td class="indices">{{Shallow.awlc}}</td>
                                             <td class="indicator">
-                                                <div class="scale"><span class="scale-c"></span></div>
                                             </td>
                                         </tr>
                                         <tr>
@@ -312,29 +329,309 @@
                                             </th>
                                             <td class="indices">{{formula.LAVFomula}}</td>
                                             <td class="indicator">
-                                                <div class="scale"><span class="scale-e"></span></div>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>Công thức của Liem Thanh Nguyen and Alan B. Henkin 1982
+                                            <th>Công thức của Liem Thanh Nguyen và Alan B. Henkin 1982
                                                 <div style="font-size: 15px; color: #cacaca">Xem công thức tính
                                                     tại <a style="color: #6868a2;" href="#defineLTNFormula1982"> đây</a>
                                                 </div>
                                             </th>
                                             <td class="indices">{{formula.NH1982}}</td>
                                             <td class="indicator">
-                                                <div class="scale"><span class="scale-e"></span></div>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>Công thức của Liem Thanh Nguyen and Alan B. Henkin 1985
+                                            <th>Công thức của Liem Thanh Nguyen và Alan B. Henkin 1985
                                                 <div style="font-size: 15px; color: #cacaca">Xem công thức tính
                                                     tại <a style="color: #6868a2;" href="#defineLTNFormula1985"> đây</a>
                                                 </div>
                                             </th>
                                             <td class="indices">{{formula.NH1985}}</td>
                                             <td class="indicator">
-                                                <div class="scale"><span class="scale-e"></span></div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="results listpercent">
+                                <p class="text--blue uppercase sans-serif--bold flush-bottom">Thông số thuộc tính từ
+                                    loại</p>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <th>Số lượng trung bình tính từ trên câu</th>
+                                            <td>{{Pos.averageNumberOfPostagPerSentence.A}}</td>
+                                            <td class="indicator"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Số lượng trung bình danh từ trên câu</th>
+                                            <td>{{Pos.averageNumberOfPostagPerSentence.N}}</td>
+                                            <td></td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Số lượng trung bình phó từ (trạng từ) trên câu</th>
+                                            <td>{{Pos.averageNumberOfPostagPerSentence.R}}</td>
+                                            <td></td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Số lượng trung bình động từ trên câu</th>
+                                            <td>{{Pos.averageNumberOfPostagPerSentence.V}}</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Số lượng trung bình liên từ trên câu</th>
+                                            <td>{{Pos.averageNumberOfPostagPerSentence.C}}</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Số lượng trung bình giới từ trên câu</th>
+                                            <td>{{Pos.averageNumberOfPostagPerSentence.E}}</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Số lượng trung bình tính từ riêng biệt trên câu</th>
+                                            <td>{{Pos.averageNumberOfUniquePostagPerSentence.A}}</td>
+                                            <td class="indicator"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Số lượng trung bình danh từ riêng biệt trên câu</th>
+                                            <td>{{Pos.averageNumberOfUniquePostagPerSentence.N}}</td>
+                                            <td class="indicator"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Số lượng trung bình phó từ (trạng từ) riêng biệt trên câu</th>
+                                            <td>{{Pos.averageNumberOfUniquePostagPerSentence.R}}</td>
+                                            <td class="indicator"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Số lượng trung bình động từ riêng biệt trên câu</th>
+                                            <td>{{Pos.averageNumberOfUniquePostagPerSentence.V}}</td>
+                                            <td class="indicator"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Số lượng trung bình liên từ riêng biệt trên câu</th>
+                                            <td>{{Pos.averageNumberOfUniquePostagPerSentence.C}}</td>
+                                            <td class="indicator"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Số lượng trung bình giới từ riêng biệt trên câu</th>
+                                            <td>{{Pos.averageNumberOfUniquePostagPerSentence.E}}</td>
+                                            <td class="indicator"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Tỉ lệ tính từ của tài liệu</th>
+                                            <td class="percent">{{Pos.percertangeOfPostagPerDocument.A}}</td>
+                                            <td class="indicator">
+                                                <div class="scale"><span></span></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Tỉ lệ danh từ của tài liệu</th>
+                                            <td class="percent">{{Pos.percertangeOfPostagPerDocument.N}}</td>
+                                            <td class="indicator">
+                                                <div class="scale"><span></span></div>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <th>Tỉ lệ phó từ (trạng từ) của tài liệu</th>
+                                            <td class="percent">{{Pos.percertangeOfPostagPerDocument.R}}</td>
+                                            <td class="indicator">
+                                                <div class="scale"><span></span></div>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <th>Tỉ lệ động từ của tài liệu</th>
+                                            <td class="percent">{{Pos.percertangeOfPostagPerDocument.V}}</td>
+                                            <td class="indicator">
+                                                <div class="scale"><span></span></div>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <th>Tỉ lệ liên từ của tài liệu</th>
+                                            <td class="percent">{{Pos.percertangeOfPostagPerDocument.C}}</td>
+                                            <td class="indicator">
+                                                <div class="scale"><span></span></div>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <th>Tỉ lệ giới từ của tài liệu</th>
+                                            <td class="percent">{{Pos.percertangeOfPostagPerDocument.E}}</td>
+                                            <td class="indicator">
+                                                <div class="scale"><span></span></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Tỉ lệ tính từ riêng biệt của tài liệu</th>
+                                            <td class="percent">{{Pos.percertangeOfUniquePostagPerDocument.A}}</td>
+                                            <td class="indicator">
+                                                <div class="scale"><span></span></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Tỉ lệ danh từ riêng biệt của tài liệu</th>
+                                            <td class="percent">{{Pos.percertangeOfUniquePostagPerDocument.N}}</td>
+                                            <td class="indicator">
+                                                <div class="scale"><span></span></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Tỉ lệ phó từ (trạng từ) riêng biệt của tài liệu</th>
+                                            <td class="percent">{{Pos.percertangeOfUniquePostagPerDocument.R}}</td>
+                                            <td class="indicator">
+                                                <div class="scale"><span></span></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Tỉ lệ động từ riêng biệt của tài liệu</th>
+                                            <td class="percent">{{Pos.percertangeOfUniquePostagPerDocument.V}}</td>
+                                            <td class="indicator">
+                                                <div class="scale"><span></span></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Tỉ lệ liên từ riêng biệt của tài liệu</th>
+                                            <td class="percent">{{Pos.percertangeOfUniquePostagPerDocument.C}}</td>
+                                            <td class="indicator">
+                                                <div class="scale"><span></span></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Tỉ lệ giới từ riêng biệt của tài liệu</th>
+                                            <td class="percent">{{Pos.percertangeOfUniquePostagPerDocument.E}}</td>
+                                            <td class="indicator">
+                                                <div class="scale"><span></span></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Tỉ lệ tính từ riêng biệt trên từ loại riêng biệt của tài liệu</th>
+                                            <td class="percent">
+                                                {{Pos.percertangeOfUniquePostagDivUniqueWordPerDocument.A}}</td>
+                                            <td class="indicator">
+                                                <div class="scale"><span></span></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Tỉ lệ danh từ riêng biệt trên từ loại riêng biệt của tài liệu</th>
+                                            <td class="percent">
+                                                {{Pos.percertangeOfUniquePostagDivUniqueWordPerDocument.N}}</td>
+                                            <td class="indicator">
+                                                <div class="scale"><span></span></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Tỉ lệ phó từ (trạng từ) riêng biệt trên từ loại riêng biệt của tài liệu
+                                            </th>
+                                            <td class="percent">
+                                                {{Pos.percertangeOfUniquePostagDivUniqueWordPerDocument.R}}</td>
+                                            <td class="indicator">
+                                                <div class="scale"><span></span></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Tỉ lệ động từ riêng biệt trên từ loại riêng biệt của tài liệu</th>
+                                            <td class="percent">
+                                                {{Pos.percertangeOfUniquePostagDivUniqueWordPerDocument.V}}</td>
+                                            <td class="indicator">
+                                                <div class="scale"><span></span></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Tỉ lệ liên từ riêng biệt trên từ loại riêng biệt của tài liệu</th>
+                                            <td class="percent">
+                                                {{Pos.percertangeOfUniquePostagDivUniqueWordPerDocument.C}}</td>
+                                            <td class="indicator">
+                                                <div class="scale"><span></span></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Tỉ lệ giới từ riêng biệt trên từ loại riêng biệt của tài liệu</th>
+                                            <td class="percent">
+                                                {{Pos.percertangeOfUniquePostagDivUniqueWordPerDocument.E}}</td>
+                                            <td class="indicator">
+                                                <div class="scale"><span></span></div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="results listpercent">
+                                <p class="text--blue uppercase sans-serif--bold flush-bottom">Thông số thuộc tính thực
+                                    thể</p>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <th>Số lượng thực thể của tài liệu</th>
+                                            <td>{{Ner.numberOfEntityPerDocument}}</td>
+                                            <td class="indicator"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Số lượng thực thể riêng biệt của tài liệu</th>
+                                            <td>{{Ner.numberOfUniqueEntityPerDocument}}</td>
+                                            <td class="indicator"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Số lượng thực thể trung bình trên 1 câu</th>
+                                            <td>{{Ner.numberOfEntityPerSentence}}</td>
+                                            <td></td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Số lượng thực thể riêng biệt trung bình trên 1 câu</th>
+                                            <td>{{Ner.numberOfUniqueEntityPerSentence}}</td>
+                                            <td></td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Số lượng thực thể có tên của tài liệu</th>
+                                            <td>{{Ner.numberOfNamedEntityPerDocument}}</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Số lượng thực thể có tên riêng biệt của tài liệu</th>
+                                            <td>{{Ner.numberOfUniqueNamedEntityPerDocument}}</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Số lượng thực thể có tên trung bình trên 1 câu</th>
+                                            <td>{{Ner.numberOfNamedEntityPerSentence}}</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Số lượng thực thể có tên riêng biệt trung bình trên 1 câu</th>
+                                            <td>{{Ner.numberOfUniqueNamedEntityPerSentence}}</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Tỉ lệ thực thể có tên trên thực thể của tài liệu</th>
+                                            <td class="percent">
+                                                {{Ner.percertangeNumberNamedEntityDivNumberEnityPerDocument}}</td>
+                                            <td class="indicator">
+                                                <div class="scale"><span></span></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Tỉ lệ thực thể có tên riêng biệt trên thực thể riêng biêt của tài liệu
+                                            </th>
+                                            <td class="percent">
+                                                {{Ner.percertangeUniqueNumberNamedEntityDivUniqueNumberEnityPerDocument}}
+                                            </td>
+                                            <td class="indicator">
+                                                <div class="scale"><span></span></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Tỉ lệ thực thể có tên</th>
+                                            <td class="percent">{{Ner.percertangeNamedEntity}}</td>
+                                            <td class="indicator">
+                                                <div class="scale"><span></span></div>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -370,7 +667,7 @@
                                 </div>
 
                             </div>
-                                <div class="item" id="wordsylablelength">
+                            <div class="item" id="wordsylablelength">
                                 <span>*Độ dài trung bình từ tính theo âm tiết ( awls) được tính bằng công thức lấy tổng
                                     số lượng âm tiết chia cho tổng số lượng từ</span>
 
@@ -379,7 +676,7 @@
                                 </div>
 
                             </div>
-                                    <div class="item" id="characterwordlength">
+                            <div class="item" id="characterwordlength">
                                 <span>*Độ dài trung bình từ tính theo kí tự ( awlc) được tính bằng công thức lấy tổng
                                     số lượng kí tự chia cho tổng số lượng từ</span>
 
@@ -389,7 +686,7 @@
 
                             </div>
                             <div class="item" id="defineSylable">
-                                <span>*Âm tiết khó được xác định bằng cách kiểm tra sự xuất hiện của âm tiết trong danh
+                                <span>*Tỉ lệ âm tiết khó (pds) được xác định bằng cách kiểm tra sự xuất hiện của âm tiết trong danh
                                     sách 3000 âm tiết thông dụng trong tiếng Việt, nếu âm tiết không xuất hiện trong
                                     danh sách thì đó là âm tiết khó</span>
                                 <div class="list">&nbsp;&nbsp;Xem danh sách âm tiết thông dụng tại <a
@@ -397,7 +694,7 @@
 
                             </div>
                             <div class="item" id="defineWord">
-                                <span>*Từ khó được xác định bằng cách kiểm tra sự xuất hiện của âm tiết trong danh sách
+                                <span>*Tỉ lệ từ khó (pdw) được xác định bằng cách kiểm tra sự xuất hiện của âm tiết trong danh sách
                                     3000 từ thông dụng trong tiếng Việt, nếu từ không xuất hiện trong danh sách thì đó
                                     là từ khó</span>
                                 <div class="list">&nbsp;&nbsp;Xem danh sách từ thông dụng tại <a style="color: #6868a2;"
@@ -405,39 +702,50 @@
 
                             </div>
                             <div class="item" id="hanviet">
-                                <span>*Từ Hán Việt được xác định bằng cách kiểm tra sự xuất hiện của từ trong danh sách
+                                <span>*Tỉ lệ từ Hán Việt (psvw) được xác định bằng cách kiểm tra sự xuất hiện của từ trong danh sách
                                     từ Hán - Việt, nếu từ xuất hiện trong danh sách thì đó là từ Hán Việt</span>
                                 <div class="list">&nbsp;&nbsp;Xem danh sách từ Hán Việt tại <a style="color: #6868a2;"
                                         target="_blank" href="/han-viet">đây</a></div>
                             </div>
                             <div class="item" id="phuongngu">
-                                <span>*Từ phương ngữ được xác định bằng cách kiểm tra sự xuất hiện của từ trong danh
+                                <span>*Tỉ lệ từ phương ngữ (pdiadw) được xác định bằng cách kiểm tra sự xuất hiện của từ trong danh
                                     sách từ phương ngữ, nếu từ xuất hiện trong danh sách thì đó là từ phương ngữ</span>
                                 <div class="list">&nbsp;&nbsp;Xem danh sách từ phương ngữ tại <a style="color: #6868a2;"
                                         target="_blank" href="/phuong-ngu">đây</a></div>
                             </div>
                             <div class="item" id='defineLAVFormula'>
-                                <span>*Công thức của Lương An Vinh được tính theo cách tính sau: </span>
+                                <span>*Công thức của nhóm tác giả Lương An Vinh được tính theo cách tính sau: </span>
                                 <div style="text-align: center;">
-                                    Kết quả = 0.004*aslc + 0.1905*awlc + 2.7147*pdw - 0.7295
+                                    Kết quả = 0.004*aslc + 0.1905*awlc + 2.7147*pdw - 0.7295 (1)
                                 </div>
                             </div>
                             <div class="item" id="defineLTNFormula1982">
-                                <span>*Công thức của Liem Thanh Nguyen and Alan B. Henkin 1982 được tính theo cách tính
+                                <span>*Công thức của Liem Thanh Nguyen và Alan B. Henkin 1982 được tính theo cách tính
                                     sau: </span>
                                 <div style="text-align: center;">
-                                    Kết quả = 2*awlc + 0.2*aslc - 6
+                                    Kết quả = 2*awlc + 0.2*aslc - 6 (2)
                                 </div>
                             </div>
                             <div class="item" id="defineLTNFormula1985">
-                                <span>*Công thức của Liem Thanh Nguyen and Alan B. Henkin 1985 được tính theo cách tính
+                                <span>*Công thức của Liem Thanh Nguyen và Alan B. Henkin 1985 được tính theo cách tính
                                     sau: </span>
                                 <div style="text-align: center;">
                                     <div>wdIndex = pdw*100</div>
-                                    Kết quả = 0.27*wdIndex + 0.13*aslc +1.74
+                                    Kết quả = 0.27*wdIndex + 0.13*aslc +1.74 (2)
                                 </div>
                             </div>
-
+                            <div class="item" id="reference">
+                                    <div style="font-size: 20px;">THAM KHẢO: </div>
+                                <div class="item" style="margin-top: 10px !important;">
+                                    1. A. Luong, D. Nguyen and D. Dinh, <a style="color: #6868a2;" target="_blank" href="https://www.researchgate.net/publication/321259141_Examining_the_text-length_factor_in_evaluating_the_readability_of_literary_texts_in_Vietnamese_textbooks">"A New Formula for Vietnamese Text Readability Assessment,"</a> 2018 10th International Conference on Knowledge and Systems Engineering (KSE), Ho Chi Minh City, 2018, pp. 198-202, doi: 10.1109/KSE.2018.8573379
+                                </div>
+                                <div class="item">
+                                    2. L. T. Nguyen and A. B. Henkin, <a style="color: #6868a2;" target="_blank" href="https://www.jstor.org/stable/pdf/40031716.pdf?seq=1">“A Readability Formula for Vietnamese,”</a> Journal of Reading, vol. 26, no. 3, pp. 243– 251, 1982. [Online]. Available: http://www.jstor.org/stable/40031716 
+                                </div>
+                                <div class="item">
+                                    3. <a style="color: #6868a2;" target="_blank" href="http://www.jstor.org/stable/40029662">“A Second Generation Readability Formula for Vietnamese,”</a> Journal of Reading, vol. 29, no. 3, pp. 219– 225, 1985. [Online]. Available: http://www.jstor.org/stable/40029662
+                                </div>
+                            </div>
 
                         </div>
                         {{else}}
@@ -475,8 +783,12 @@ toggle between hiding and showing the dropdown content */
 </script>
 
 <script>
+    $('#file-1').change(function() {
+        if($('#file-1')[0].files[0] && $('#file-1')[0].files[0].name) {
+            $('#spanFile').text($('#file-1')[0].files[0].name);
+        }
+    })
     function changeActiveTab(tab) {
-        console.log(tab);
         if (tab === 'direct') {
             $('#tabs-2').addClass('ui-state-active');
             $('#tabs-3').removeClass('ui-state-active');
@@ -492,7 +804,6 @@ toggle between hiding and showing the dropdown content */
 
     function checkActiveTab() {
         const checkBy = $('#activeTab').text();
-        console.log('checkBy-', checkBy);
         if (checkBy && checkBy == 'file') {
             $('#tabs-3').addClass('ui-state-active');
             $('#tabs-2').removeClass('ui-state-active');
@@ -504,28 +815,29 @@ toggle between hiding and showing the dropdown content */
     checkActiveTab();
     $('#displaySylable').click(function () {
         if ($('#displaySylable').is(':checked')) {
-            $('.listSylable').css('display', 'unset');
-            $('.listWords').css('display', 'none');
-            $("#displayWordType").attr('disabled', true);
-            $("#displayNertag").attr('disabled', true);
-            $('#spandisplayNertag').css('color', '#a2a0a0');
-            $('#spandisplayWordType').css('color', '#a2a0a0');
-            $('.dropdown').css('display', 'none');
-        } else {
             $('.listSylable').css('display', 'none');
             $('.listWords').css('display', 'unset');
             $("#displayWordType").attr('disabled', false);
-            $('#displayNertag').attr('disabled', false);
-            $('#spandisplayNertag').css('color', '#666');
+            $("#displayNertag").attr('disabled', true);
+            $('#spandisplayNertag').css('color', '#a2a0a0');
             $('#spandisplayWordType').css('color', '#666');
             $('.dropdown').css('display', 'unset');
+        } else {
+            $('.listSylable').css('display', 'unset');
+            $('.listWords').css('display', 'none');
+            $("#displayWordType").attr('disabled', true);
+            $('#displayNertag').attr('disabled', false);
+            $('#spandisplayNertag').css('color', '#666');
+            $('#spandisplayWordType').css('color', '#a2a0a0');
+            $('.dropdown').css('display', 'none');
         }
     });
-    $('#displayNertag').click(function() {
+    $('#displayNertag').click(function () {
         if ($('#displayNertag').is(':checked')) {
             $('.listNertag').css('display', 'unset');
             $('.listSylable').css('display', 'none');
             $('.listWords').css('display', 'none');
+            $('#displayparseTag').attr('disabled', true);
             $('#displaySylable').attr('disabled', true);
             $('#displayWordType').attr('disabled', true);
             $('#displayFrequency').attr('disabled', true);
@@ -533,9 +845,11 @@ toggle between hiding and showing the dropdown content */
             $('#showAttribute').css('color', '#a2a0a0');
             $('#spandisplaySylable').css('color', '#a2a0a0');
             $('.dropdown').css('display', 'none');
+            $('.filter').css('display', 'none');
         } else {
             $('.listWords').css('display', 'unset');
             $('.listNertag').css('display', 'none');
+            $('#displayparseTag').attr('disabled', false);
             $('#displaySylable').attr('disabled', false);
             $('#displayWordType').attr('disabled', false);
             $('#displayFrequency').attr('disabled', false);
@@ -543,8 +857,9 @@ toggle between hiding and showing the dropdown content */
             $('#showAttribute').css('color', '#666');
             $('#spandisplaySylable').css('color', '#666');
             $('.dropdown').css('display', 'unset');
+            $('.filter').css('display', 'flex');
         }
-    })
+    });
     $('#displayWordType').click(function () {
         if ($('#displayWordType').is(":checked")) {
             $('.wordtype').show();
@@ -566,6 +881,43 @@ toggle between hiding and showing the dropdown content */
             $('.ranking').hide();
         }
     });
+    $('#directInput').keyup(function (event) {
+        if ($('#directInput').val().trim()) {
+            $('#btnSubmitDirect').attr('disabled', false);
+        } else {
+            $('#btnSubmitDirect').attr('disabled', true);
+        }
+    });
+    var _validFileExtensions = [".doc", ".docx", ".txt"];
+
+    function Validate(oForm) {
+        var arrInputs = oForm.getElementsByTagName("input");
+        for (var i = 0; i < arrInputs.length; i++) {
+            var oInput = arrInputs[i];
+            if (oInput.type == "file") {
+                var sFileName = oInput.value;
+                if (sFileName.length > 0) {
+                    var blnValid = false;
+                    for (var j = 0; j < _validFileExtensions.length; j++) {
+                        var sCurExtension = _validFileExtensions[j];
+                        if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length)
+                            .toLowerCase() == sCurExtension.toLowerCase()) {
+                            blnValid = true;
+                            break;
+                        }
+                    }
+
+                    if (!blnValid) {
+                        alert("Xin lỗi, " + sFileName + " không hợp lệ, chỉ được phép upload file: " + _validFileExtensions
+                            .join(", "));
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
 
     function hexc(colorval) {
         var parts = colorval.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
@@ -578,12 +930,8 @@ toggle between hiding and showing the dropdown content */
     }
 
     function changeColorType(dataType, color) {
-        console.log("changeColorType -> color", color);
-        console.log('hahahahah', dataType);
         let currentcolor = $(`.${dataType}`).css('text-decoration-color');
-        console.log('currentcolor before---', currentcolor);
         currentcolor = hexc(currentcolor);
-        console.log('currentcolor after----', currentcolor);
         $(`.${dataType}`).css('text-decoration', currentcolor == '#666666' ? 'underline' : 'none');
         $(`.${dataType}`).css('text-decoration-color', currentcolor == '#666666' ? color : '#666666');
 
@@ -620,7 +968,6 @@ toggle between hiding and showing the dropdown content */
         class: 'scale-e'
     }];
     $('.listpercent table tbody > tr').each(function (index, elements) {
-        console.log('hahaha---', $(this).find('td.percent').text());
         let td = $(this).find('td.percent');
         let percent = parseInt(td.text());
         if (percent) {
