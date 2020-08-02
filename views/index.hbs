@@ -110,11 +110,10 @@
                                 <div style="margin-bottom: 20px">
                                     <div>
                                         <input disabled style="width: 20px; height: 20px" type="checkbox" id="displayNertag">
-                                        <span style="padding-right: 1rem; color: #a2a0a0" id="spandisplayNertag">Hiển thị tách thực
-                                            thể</span>
+                                        <span style="padding-right: 1rem; color: #a2a0a0" id="spandisplayNertag">Nhận diện thực thể có tên</span>
                                         <input style="width: 20px; height: 20px" checked type="checkbox" id="displaySylable">
-                                        <span style="padding-right: 1rem;" id="spandisplaySylable"> Hiển thị tách <a
-                                                style="color: #6868a2;" target="_blank" href="/show-ranking-word"> từ loại</a></span>
+                                        <span style="padding-right: 1rem;" id="spandisplaySylable"> Hiển thị<a
+                                                style="color: #6868a2;" target="_blank" href="/show-ranking-word"> tách từ</a></span>
                                     </div>
                                     <div id="showAttribute">
 
@@ -847,7 +846,8 @@ toggle between hiding and showing the dropdown content */
             $('.dropdown').css('display', 'none');
             $('.filter').css('display', 'none');
         } else {
-            $('.listWords').css('display', 'unset');
+            $('.listSylable').css('display', 'unset');
+            $('.listWords').css('display', 'none');
             $('.listNertag').css('display', 'none');
             $('#displayparseTag').attr('disabled', false);
             $('#displaySylable').attr('disabled', false);
@@ -856,7 +856,7 @@ toggle between hiding and showing the dropdown content */
             $('#displayRanking').attr('disabled', false);
             $('#showAttribute').css('color', '#666');
             $('#spandisplaySylable').css('color', '#666');
-            $('.dropdown').css('display', 'unset');
+            $('.dropdown').css('display', 'none');
             $('.filter').css('display', 'flex');
         }
     });

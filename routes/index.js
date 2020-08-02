@@ -224,7 +224,7 @@ function handleData(directInput, res, checkBy) {
     postag.forEach(element => {
       const numberExist = wordCounter[element[0]];
       const dataType = DATATYPE[element[1]];
-      const ranking = wordRanking[element[0].toLowerCase()];
+      const ranking = wordRanking[element[0]];
       if (dataType.type !== 'Dấu câu') {
         const sylableArr = element[0].split(' ');
         sylableArr.forEach(sylable => {
