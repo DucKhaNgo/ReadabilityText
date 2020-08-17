@@ -15,8 +15,6 @@ Sau khi cài đặt xong, tiến hành mở **command prompt** của windows và
 đến thư mục của Project, lúc này gõ lệnh **npm i** để cài đặt các thư
 viện, các package cần thiết để chạy Project.
 
-![](media/image1.png){width="6.5in" height="3.7368055555555557in"}
-
 Sau khi cài đặt xong, tiến hành gõ **npm start** để tiến hành chạy
 server.
 
