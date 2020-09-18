@@ -1,3 +1,6 @@
+<h3>Readability Tool By HCMUS Student<h3>
+<h3>Author: Ngo Duc Kha - Ly Gia Huy </h3>
+
 Hướng dẫn cài đặt Readability tool Web version
 ==============================================
 
